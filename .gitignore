@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build files
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large files
+*.zip
+
+# Backend
+balmitra-backend/uploads/

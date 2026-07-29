@@ -1,0 +1,12 @@
+import Link from "next/link";
+
+export default function Logo() {
+  return (
+    <Link
+      href="/"
+      className="text-2xl font-black tracking-tight text-[#0B1220]"
+    >
+      BALMITRA
+    </Link>
+  );
+}
