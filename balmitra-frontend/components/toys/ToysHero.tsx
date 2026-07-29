@@ -60,7 +60,7 @@ export default function ToysHero() {
 
               Discover thoughtfully designed toys that inspire imagination,
               creativity, curiosity, and meaningful learning moments while
-              bringing endless joy to every child's journey.
+              bringing endless joy to every childs journey.
 
             </p>
 

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 const collections = [
@@ -41,7 +40,7 @@ export default function FeaturedCollections() {
           </h2>
 
           <p className="mx-auto mt-5 max-w-3xl text-lg text-[#6B7280] leading-8">
-            Discover beautifully crafted collections designed for life's most
+            Discover beautifully crafted collections designed for life most
             memorable occasions.
           </p>
 

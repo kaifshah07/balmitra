@@ -240,7 +240,7 @@ export default function OccasionSection() {
           </h2>
 
           <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-gray-500">
-            Whether it's a birthday, anniversary, wedding, or festive celebration,
+            Whether itcomponents/toys/ToysHero.tsxs a birthday, anniversary, wedding, or festive celebration,
             discover carefully selected gifts crafted to create lasting memories.
           </p>
 
