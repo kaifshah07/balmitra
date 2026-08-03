@@ -4,5 +4,178 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("mysql://root:@localhost:3306/balmitra")
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  password  String
+  fullName  String
+  email     String    @unique
+  role      AdminRole @default(ADMIN)
+  isActive  Boolean   @default(true)
+  lastLogin DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("admins")
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+}
+
+model Category {
+  id            Int        @id @default(autoincrement())
+  name          String     @unique
+  slug          String     @unique
+  description   String?
+  image         String?
+  displayOrder  Int        @default(0)
+  isActive      Boolean    @default(true)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  products      Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id                 Int       @id @default(autoincrement())
+
+  name               String
+  slug               String    @unique
+  sku                String    @unique
+
+  shortDescription   String?
+  description        String?   @db.LongText
+
+  brand              String?
+  ageGroup           String?
+
+  price              Decimal   @db.Decimal(10,2)
+  discountPrice      Decimal?  @db.Decimal(10,2)
+
+  stock              Int       @default(0)
+
+  thumbnail          String?
+
+  gallery            ProductImage[]
+  orderItems         OrderItem[]
+
+  isFeatured         Boolean   @default(false)
+  isTrending         Boolean   @default(false)
+  isNewArrival       Boolean   @default(false)
+
+  isActive           Boolean   @default(true)
+
+  metaTitle          String?
+  metaDescription    String?
+
+  categoryId         Int
+  category           Category @relation(fields: [categoryId], references: [id])
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("products")
+}
+
+model ProductImage {
+
+  id          Int      @id @default(autoincrement())
+
+  image       String
+
+  productId   Int
+
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_images")
+
+}
+
+model Banner {
+  id           Int      @id @default(autoincrement())
+
+  title        String
+  subtitle     String?
+  image        String
+
+  redirectUrl  String?
+
+  displayOrder Int      @default(0)
+
+  isActive     Boolean  @default(true)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("banners")
+}
+
+model Order {
+  id              Int           @id @default(autoincrement())
+
+  orderNumber     String        @unique
+
+  customerName    String
+  customerEmail   String
+  customerPhone   String
+
+  totalAmount     Decimal       @db.Decimal(10,2)
+
+  paymentMethod   String
+
+  paymentStatus   PaymentStatus @default(PENDING)
+
+  orderStatus     OrderStatus   @default(PENDING)
+
+  address         String        @db.Text
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  items           OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+
+  id          Int      @id @default(autoincrement())
+
+  quantity    Int
+
+  price       Decimal  @db.Decimal(10,2)
+
+  productId   Int
+
+  orderId     Int
+
+  product      Product @relation(fields:[productId],references:[id])
+
+  order        Order   @relation(fields:[orderId],references:[id], onDelete: Cascade)
+
+  @@map("order_items")
+
+}
+
+enum PaymentStatus{
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum OrderStatus{
+  PENDING
+  CONFIRMED
+  PACKED
+  SHIPPED
+  DELIVERED
+  CANCELLED
 }

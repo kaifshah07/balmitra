@@ -1,17 +1,17 @@
 import app from "./app";
 import { env } from "./config/env";
-import { connectDB } from "./config/database";
+import { connectDatabase } from "./config/database";
 
 const startServer = async () => {
-  await connectDB();
+  await connectDatabase();
 
   app.listen(env.PORT, () => {
     console.log(`
-==========================================
-🚀 Balmitra Backend Started Successfully
-🌐 Server : http://localhost:${env.PORT}
-❤️ Health : http://localhost:${env.PORT}/health
-==========================================
+====================================
+🚀 Balmitra Backend Started
+🌐 Port : ${env.PORT}
+🌍 Mode : ${env.NODE_ENV}
+====================================
 `);
   });
 };
