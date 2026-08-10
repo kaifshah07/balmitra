@@ -6,12 +6,3 @@ export default function HeroBadge() {
   );
 }
 
-// export default function HeroBadge() {
-//   return (
-//     <div className="
-//     inline-flex rounded-full bg-[#FFF8E6] px-0 py-0 text-xs font-semibold text-[#8A6A00]
-//     ">
-//       ✨ Trusted Marketplace
-//     </div>
-//   );
-// }

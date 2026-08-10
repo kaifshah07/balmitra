@@ -158,7 +158,7 @@ return statusSteps.indexOf(
 if (loading) {
 return ( <main className="mx-auto max-w-7xl px-6 py-16"> <div className="flex min-h-[300px] items-center justify-center"> <div className="text-center"> <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-[#C67C2E]" />
 
-```
+
         <p className="mt-4 text-gray-500">
           Loading order...
         </p>
@@ -173,7 +173,7 @@ return ( <main className="mx-auto max-w-7xl px-6 py-16"> <div className="flex mi
 if (error || !order) {
 return ( <main className="mx-auto max-w-7xl px-6 py-16"> <div className="rounded-2xl bg-white p-10 text-center shadow-sm">
 
-```
+
       <div className="text-5xl">
         📦
       </div>
@@ -205,7 +205,7 @@ const currentStep = getCurrentStep();
 
 return ( <main className="mx-auto max-w-7xl px-6 py-12">
 
-```
+
   {/* BACK */}
 
   <Link

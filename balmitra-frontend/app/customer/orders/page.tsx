@@ -168,7 +168,7 @@ if (error) {
 return ( <main className="mx-auto max-w-7xl px-6 py-16"> <div className="rounded-2xl bg-white p-10 text-center shadow-sm"> <h1 className="text-2xl font-bold text-[#0B1220]">
 Unable to load orders </h1>
 
-```
+
       <p className="mt-3 text-gray-500">
         {error}
       </p>
@@ -189,7 +189,7 @@ Unable to load orders </h1>
 
 return ( <main className="mx-auto max-w-7xl px-6 py-12">
 
-```
+
   {/* HEADER */}
 
   <div className="mb-10">

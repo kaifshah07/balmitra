@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import SiteLayout from "@/components/layout/SiteLayout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,10 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-sans bg-[#FAFAF8] text-[#111827]`}
-      >
-        {children}
-      </body>
+  className={`${inter.variable} font-sans bg-[#FAFAF8] text-[#111827]`}
+>
+  <SiteLayout>{children}</SiteLayout>
+</body>
     </html>
   );
 }

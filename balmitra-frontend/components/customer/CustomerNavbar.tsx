@@ -3,11 +3,17 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Logo from "@/components/layout/logo/logo";
+
+interface Customer {
+  name?: string;
+  email?: string;
+}
 
 export default function CustomerNavbar() {
   const router = useRouter();
 
-  const [customer, setCustomer] = useState<any>(null);
+  const [customer, setCustomer] = useState<Customer | null>(null);
 
   useEffect(() => {
     const storedCustomer = localStorage.getItem("customer");
@@ -29,20 +35,14 @@ export default function CustomerNavbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-100 bg-white">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+    <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-[#FAFAF8]/95 backdrop-blur-xl">
+      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-6 px-6">
 
         {/* Logo */}
-        <Link
-          href="/customer"
-          className="text-2xl font-bold text-[#C67C2E]"
-        >
-          Balmitra
-        </Link>
+        <Logo href="/customer" />
 
         {/* Navigation */}
         <nav className="hidden items-center gap-8 md:flex">
-
           <Link
             href="/customer"
             className="text-sm font-medium text-gray-700 transition hover:text-[#C67C2E]"
@@ -70,7 +70,6 @@ export default function CustomerNavbar() {
           >
             My Orders
           </Link>
-
         </nav>
 
         {/* Customer Actions */}
@@ -85,7 +84,7 @@ export default function CustomerNavbar() {
 
           <Link
             href="/customer/profile"
-            className="hidden rounded-lg bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 md:block"
+            className="hidden rounded-lg bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 md:block"
           >
             {customer?.name || "Account"}
           </Link>
@@ -98,7 +97,6 @@ export default function CustomerNavbar() {
           </button>
 
         </div>
-
       </div>
     </header>
   );

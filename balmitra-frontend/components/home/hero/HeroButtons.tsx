@@ -1,33 +1,20 @@
-// import Button from "@/components/ui/button";
-
-// export default function HeroButtons() {
-//   return (
-//     <div className="mt-5 flex flex-wrap gap-2">
-//       <Button>Shop Now</Button>
-
-//       <Button variant="outline">
-//         Become a Vendor
-//       </Button>
-
-      
-//     </div>
-//   );
-// }
-
+import Link from "next/link";
 import Button from "@/components/ui/button";
 
 export default function HeroButtons() {
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap items-center gap-4">
+      <Link href="/products">
+        <Button>
+          Shop Now
+        </Button>
+      </Link>
 
-      <Button>
-        Shop Now
-      </Button>
-
-      <Button variant="outline">
-        Become a Vendor
-      </Button>
-
+      <Link href="/become-a-vendor">
+        <Button variant="outline">
+          Become a Vendor
+        </Button>
+      </Link>
     </div>
   );
 }
