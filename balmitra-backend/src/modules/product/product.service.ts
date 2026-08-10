@@ -75,21 +75,6 @@ export class ProductService {
 
   }
 
-  static async getById(id: number) {
-
-    return prisma.product.findUnique({
-
-      where: { id },
-
-      include: {
-
-        category: true,
-
-      },
-
-    });
-
-  }
 
   static async update(id: number, data: any) {
 
@@ -113,4 +98,46 @@ export class ProductService {
 
   }
 
+  static async getById(id: number) {
+  return prisma.product.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      category: true,
+      gallery: true,
+      orderItems: true,
+    },
+  });
+}
+
+static async getPublicProducts() {
+  return prisma.product.findMany({
+    where: {
+      isActive: true,
+      stock: {
+        gt: 0,
+      },
+    },
+    include: {
+      category: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
+static async getPublicProductById(id: number) {
+  return prisma.product.findFirst({
+    where: {
+      id,
+      isActive: true,
+    },
+    include: {
+      category: true,
+      gallery: true,
+    },
+  });
+}
 }

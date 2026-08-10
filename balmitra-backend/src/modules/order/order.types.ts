@@ -6,18 +6,13 @@ export interface OrderItemDTO{
 
 }
 
-export interface CreateOrderDTO{
+export interface CreateOrderDTO {
+  customerId?: number;
+  address: string;
+  paymentMethod: string;
 
-    customerName:string;
-
-    customerEmail:string;
-
-    customerPhone:string;
-
-    address:string;
-
-    paymentMethod:"COD"|"ONLINE";
-
-    items:OrderItemDTO[];
-
+  items: {
+    productId: number;
+    quantity: number;
+  }[];
 }

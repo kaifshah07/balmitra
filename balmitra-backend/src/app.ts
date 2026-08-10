@@ -14,7 +14,12 @@ const app = express();
 app.use(helmet());
 
 // CORS
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 // Body Parser
 app.use(express.json());
