@@ -1,9 +1,12 @@
-
 import { BrevoClient } from "@getbrevo/brevo";
 
-const brevo = new BrevoClient({
+export const brevo = new BrevoClient({
   apiKey: process.env.BREVO_API_KEY as string,
 });
+
+// ========================================
+// OTP EMAIL
+// ========================================
 
 export async function sendOtpEmail(
   email: string,
@@ -25,8 +28,8 @@ export async function sendOtpEmail(
 
         to: [
           {
-            email: email,
-            name: name,
+            email,
+            name,
           },
         ],
 
@@ -64,7 +67,6 @@ export async function sendOtpEmail(
     return result;
 
   } catch (error: any) {
-
     console.error("❌ BREVO ERROR:");
     console.error("Message:", error?.message);
     console.error("Status:", error?.statusCode);
@@ -72,7 +74,8 @@ export async function sendOtpEmail(
     console.error("Full Error:", error);
 
     throw new Error(
-      error?.message || "Unable to send verification email"
+      error?.message ||
+        "Unable to send verification email"
     );
   }
 }

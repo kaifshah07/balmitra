@@ -97,4 +97,121 @@ export class PaymentController {
 
   }
 
+  static async create(
+  req: Request,
+  res: Response
+) {
+  try {
+    const customerId =
+      (req as any).customer?.id;
+
+    if (!customerId) {
+      return res.status(401).json({
+        success: false,
+        message:
+          "Customer authentication required",
+      });
+    }
+
+    const orderId = Number(
+      req.body.orderId
+    );
+
+    if (!orderId) {
+      return res.status(400).json({
+        success: false,
+        message: "Order ID is required",
+      });
+    }
+
+    const payment =
+      await PaymentService.createPayment(
+        orderId,
+        Number(customerId)
+      );
+
+    return res.status(201).json({
+      success: true,
+      message:
+        "Payment created successfully",
+      data: payment,
+    });
+  } catch (error: any) {
+    console.error(
+      "Create Payment Error:",
+      error
+    );
+
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
+static async verify(
+  req: Request,
+  res: Response
+) {
+  try {
+    const customerId =
+      (req as any).customer?.id;
+
+    if (!customerId) {
+      return res.status(401).json({
+        success: false,
+        message:
+          "Customer authentication required",
+      });
+    }
+
+    const {
+      paymentId,
+      razorpayPaymentId,
+      razorpayOrderId,
+      razorpaySignature,
+    } = req.body;
+
+    if (
+      !paymentId ||
+      !razorpayPaymentId ||
+      !razorpayOrderId ||
+      !razorpaySignature
+    ) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Payment verification data is incomplete",
+      });
+    }
+
+    const payment =
+      await PaymentService.verifyPayment(
+        paymentId,
+        razorpayPaymentId,
+        razorpayOrderId,
+        razorpaySignature,
+        Number(customerId)
+      );
+
+    return res.json({
+      success: true,
+      message:
+        "Payment verified successfully",
+      data: payment,
+    });
+  } catch (error: any) {
+    console.error(
+      "Verify Payment Error:",
+      error
+    );
+
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
+
 }

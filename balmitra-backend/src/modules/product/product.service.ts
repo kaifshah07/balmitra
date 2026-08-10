@@ -76,17 +76,113 @@ export class ProductService {
   }
 
 
-  static async update(id: number, data: any) {
+  
+static async update(id: number, data: any) {
+  const existingProduct = await prisma.product.findUnique({
+    where: { id },
+  });
 
-    return prisma.product.update({
+  if (!existingProduct) {
+    throw new Error("Product not found");
+  }
 
-      where: { id },
+  const updateData: any = {};
 
-      data,
+  // Basic fields
+  if (data.name !== undefined) {
+    updateData.name = data.name;
+  }
 
+  if (data.description !== undefined) {
+    updateData.description = data.description;
+  }
+
+  // Category
+  if (data.categoryId !== undefined) {
+    const categoryId = Number(data.categoryId);
+
+    const category = await prisma.category.findUnique({
+      where: {
+        id: categoryId,
+      },
     });
 
+    if (!category) {
+      throw new Error("Category not found");
+    }
+
+    updateData.categoryId = categoryId;
   }
+
+  // Price
+  if (data.price !== undefined) {
+    updateData.price = Number(data.price);
+  }
+
+  // Discount Price
+  if (data.discountPrice !== undefined) {
+    updateData.discountPrice =
+      data.discountPrice === "" ||
+      data.discountPrice === null
+        ? null
+        : Number(data.discountPrice);
+  }
+
+  // Stock
+  if (data.stock !== undefined) {
+    updateData.stock = Number(data.stock);
+  }
+
+  // Boolean fields
+  if (data.isFeatured !== undefined) {
+    updateData.isFeatured =
+      data.isFeatured === true ||
+      data.isFeatured === "true";
+  }
+
+  if (data.isTrending !== undefined) {
+    updateData.isTrending =
+      data.isTrending === true ||
+      data.isTrending === "true";
+  }
+
+  if (data.isNewArrival !== undefined) {
+    updateData.isNewArrival =
+      data.isNewArrival === true ||
+      data.isNewArrival === "true";
+  }
+
+  if (data.isActive !== undefined) {
+    updateData.isActive =
+      data.isActive === true ||
+      data.isActive === "true";
+  }
+
+  // Thumbnail
+  if (data.thumbnail !== undefined) {
+    updateData.thumbnail = data.thumbnail;
+  }
+
+  // Update slug if name changed
+  if (data.name !== undefined) {
+    updateData.slug = data.name
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-");
+  }
+
+  return prisma.product.update({
+    where: {
+      id,
+    },
+    data: updateData,
+    include: {
+      category: true,
+    },
+  });
+}
+
+
 
   static async delete(id: number) {
 

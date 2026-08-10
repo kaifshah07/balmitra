@@ -24,4 +24,7 @@ export const env = {
   BREVO_API_KEY: process.env.BREVO_API_KEY || "",
   BREVO_SENDER_EMAIL: process.env.BREVO_SENDER_EMAIL || "",
   BREVO_SENDER_NAME: process.env.BREVO_SENDER_NAME || "Balmitra",
+
+  VENDOR_ENQUIRY_RECEIVER_EMAIL:
+    process.env.VENDOR_ENQUIRY_RECEIVER_EMAIL || "",
 };

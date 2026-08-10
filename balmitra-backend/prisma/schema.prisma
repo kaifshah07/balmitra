@@ -325,3 +325,28 @@ enum PaymentMethod {
   COD
   ONLINE
 }
+
+model VendorEnquiry {
+  id                  Int      @id @default(autoincrement())
+  name                String
+  mobile              String
+  email               String?
+  city                String
+  state               String
+  currentBusiness     String?
+  investmentCapacity  String?
+  preferredLocation   String?
+  message             String?  @db.Text
+  status              VendorEnquiryStatus @default(PENDING)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@map("vendor_enquiries")
+}
+
+enum VendorEnquiryStatus {
+  PENDING
+  CONTACTED
+  APPROVED
+  REJECTED
+}
