@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/footer/Footer";
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -22,12 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans bg-[#FAFAF8] text-[#111827]`}>
-        <Navbar />
-
-        <main>{children}</main>
-
-        <Footer />
+      <body
+        className={`${inter.variable} font-sans bg-[#FAFAF8] text-[#111827]`}
+      >
+        {children}
       </body>
     </html>
   );
