@@ -58,12 +58,12 @@ export default function UserActions() {
         )}
       </Link>
 
-      <Link
+      {/* <Link
   href="/orders"
   className="..."
 >
   My Orders
-</Link>
+</Link> */}
 
 
       {/* USER */}

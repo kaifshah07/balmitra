@@ -14,11 +14,11 @@ export default function Logo({
       className="flex items-center gap-2 shrink-0"
     >
       <Image
-        src="/images/navlogo/balmitra-logo.jpeg"
+        src="/images/navlogo/balmitra-logo1.jpeg"
         alt="Balmitra"
         width={50}
         height={50}
-        className="h-20 w-20 object-contain"
+        className="h-21 w-21 object-contain"
         priority
       />
 

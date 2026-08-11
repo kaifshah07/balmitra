@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import HeroSlider from "@/components/home/hero/HeroSlider";
+
 
 export default function CustomerPage() {
   const [customer, setCustomer] = useState<any>(null);
@@ -19,7 +21,10 @@ export default function CustomerPage() {
   }, []);
 
   return (
+    
     <div>
+
+      <HeroSlider />
 
       {/* Welcome Section */}
       <section className="border-b border-gray-100 bg-white">

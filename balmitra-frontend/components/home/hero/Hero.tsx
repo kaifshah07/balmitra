@@ -3,10 +3,14 @@ import Container from "@/components/ui/container";
 import HeroBadge from "./HeroBadge";
 import HeroButtons from "./HeroButtons";
 import HeroStats from "./HeroStats";
+import HeroSlider from "./HeroSlider";
 
 export default function Hero() {
   return (
+    // <HeroSlider/>
     <section className="overflow-hidden bg-[#FAFAF8]">
+
+      <HeroSlider />
 
       <Container>
 
