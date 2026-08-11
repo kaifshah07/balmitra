@@ -350,3 +350,44 @@ enum VendorEnquiryStatus {
   APPROVED
   REJECTED
 }
+model FranchiseEnquiry {
+  id Int @id @default(autoincrement())
+
+  fullName String
+  mobile String
+  email String
+
+  city String
+  state String
+
+  ownsBusiness Boolean @default(false)
+
+  currentBusinessName String?
+  currentBusinessType String?
+  businessExperience String?
+
+  preferredLocation String
+  preferredCity String
+  preferredArea String?
+
+  investmentCapacity String
+  storeType String
+  startTimeline String
+
+  message String? @db.Text
+
+  status FranchiseEnquiryStatus @default(NEW)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("franchise_enquiries")
+}
+
+enum FranchiseEnquiryStatus {
+  NEW
+  CONTACTED
+  IN_PROGRESS
+  CONVERTED
+  REJECTED
+}

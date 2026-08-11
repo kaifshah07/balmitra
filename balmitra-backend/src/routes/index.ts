@@ -11,6 +11,7 @@ import { settingsRoutes } from "../modules/settings";
 import paymentRoutes from "../modules/payment/payment.routes";
 import customerAuthRoutes from "../modules/customer-auth/customer-auth.routes";
 import vendorEnquiryRoutes from "../modules/vendor-enquiry/vendor-enquiry.routes";
+import franchiseEnquiryRoutes from "../modules/franchise-enquiry/franchise-enquiry.routes";
 
 const router = Router();
 
@@ -33,5 +34,6 @@ router.use("/settings", settingsRoutes);
 router.use("/payments",paymentRoutes);
 router.use("/auth/customer",customerAuthRoutes);
 router.use("/vendor-enquiries",vendorEnquiryRoutes);
+router.use("/franchise-enquiries",franchiseEnquiryRoutes);
 
 export default router;
