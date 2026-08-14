@@ -38,9 +38,33 @@ model Category {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  products Product[]
+  products      Product[]
+  subcategories Subcategory[]
 
   @@map("categories")
+}
+
+model Subcategory {
+  id           Int     @id @default(autoincrement())
+  name         String
+  slug         String
+  description  String?
+  image        String?
+  displayOrder Int     @default(0)
+  isActive     Boolean @default(true)
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([categoryId, name])
+  @@unique([categoryId, slug])
+  @@index([categoryId])
+  @@map("subcategories")
 }
 
 model Product {
@@ -59,10 +83,12 @@ model Product {
   price         Decimal  @db.Decimal(10, 2)
   discountPrice Decimal? @db.Decimal(10, 2)
 
-  stock   Int      @default(0)
+  stock Int @default(0)
+
   reviews Review[]
 
-  thumbnail String?
+  thumbnail         String?
+  thumbnailPublicId String?
 
   gallery    ProductImage[]
   orderItems OrderItem[]
@@ -79,9 +105,15 @@ model Product {
   categoryId Int
   category   Category @relation(fields: [categoryId], references: [id])
 
+  subcategoryId Int?
+
+  subcategory Subcategory? @relation(fields: [subcategoryId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([categoryId])
+  @@index([subcategoryId])
   @@map("products")
 }
 
@@ -195,6 +227,7 @@ model Customer {
 
   @@map("customers")
 }
+
 model Coupon {
   id Int @id @default(autoincrement())
 
@@ -327,19 +360,19 @@ enum PaymentMethod {
 }
 
 model VendorEnquiry {
-  id                  Int      @id @default(autoincrement())
-  name                String
-  mobile              String
-  email               String?
-  city                String
-  state               String
-  currentBusiness     String?
-  investmentCapacity  String?
-  preferredLocation   String?
-  message             String?  @db.Text
-  status              VendorEnquiryStatus @default(PENDING)
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  mobile             String
+  email              String?
+  city               String
+  state              String
+  currentBusiness    String?
+  investmentCapacity String?
+  preferredLocation  String?
+  message            String?             @db.Text
+  status             VendorEnquiryStatus @default(PENDING)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
 
   @@map("vendor_enquiries")
 }
@@ -350,29 +383,30 @@ enum VendorEnquiryStatus {
   APPROVED
   REJECTED
 }
+
 model FranchiseEnquiry {
   id Int @id @default(autoincrement())
 
   fullName String
-  mobile String
-  email String
+  mobile   String
+  email    String
 
-  city String
+  city  String
   state String
 
   ownsBusiness Boolean @default(false)
 
   currentBusinessName String?
   currentBusinessType String?
-  businessExperience String?
+  businessExperience  String?
 
   preferredLocation String
-  preferredCity String
-  preferredArea String?
+  preferredCity     String
+  preferredArea     String?
 
   investmentCapacity String
-  storeType String
-  startTimeline String
+  storeType          String
+  startTimeline      String
 
   message String? @db.Text
 

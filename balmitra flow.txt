@@ -1,0 +1,362 @@
+                    BALMITRA E-COMMERCE
+                           │
+             ┌─────────────┴─────────────┐
+             │                           │
+        PUBLIC WEBSITE              ADMIN PANEL
+             │                           │
+       Customer actions             Admin actions
+             │                           │
+             └─────────────┬─────────────┘
+                           │
+                      BACKEND API
+                           │
+                         MySQL
+                           │
+       ┌───────────────────┼───────────────────┐
+       │                   │                   │
+   Customers            Products             Orders
+       │                   │                   │
+   Customers           Categories          Payments
+   Accounts             Coupons             Reviews
+
+
+--------------------------------------------------------------------
+                 BALMITRA
+                    │
+        ┌───────────┴───────────┐
+        │                       │
+     CUSTOMER                  ADMIN
+        │                       │
+    Register                  Login
+        │                       │
+      Login                 Dashboard
+        │                       │
+     Browse                Products
+        │                   Categories
+     Product                  Orders
+        │                   Customers
+   Add to Cart               Coupons
+        │                   Payments
+      Cart                  Settings
+        │
+     Checkout
+        │
+     Coupon
+        │
+    Address
+        │
+     Payment
+        │
+      Order
+        │
+        ▼
+     DATABASE
+        │
+   ┌────┼────┬──────┐
+   │    │    │      │
+Users Products Orders Payments
+        │
+        ▼
+     ADMIN
+
+---------------------------------------------------------
+
+                    BALMITRA E-COMMERCE
+                           │
+              ┌────────────┴────────────┐
+              │                         │
+        PUBLIC WEBSITE              ADMIN PANEL
+              │                         │
+       Customer Account          Admin Authentication
+              │                         │
+       ┌──────┴──────┐             Dashboard
+       │             │             Products
+     Login         Signup          Categories
+       │             │             Banners
+       └──────┬──────┘             Customers
+              │                    Orders
+              │                    Coupons
+         Home Page                 Payments
+              │                    Reviews
+       ┌──────┼──────┐             Settings
+       │      │      │
+     Toys   Gifts  Categories
+       │      │      │
+       └──────┼──────┘
+              │
+        Product Listing
+              │
+        Product Details
+              │
+       Add to Cart / Buy Now
+              │
+           Cart
+              │
+        Checkout
+              │
+      Address + Coupon
+              │
+       Payment Selection
+          │          │
+         COD      Razorpay
+          │          │
+          └────┬─────┘
+               │
+          Create Order
+               │
+        Payment Verification
+               │
+        Order Confirmation
+               │
+        Customer Order Page
+               │
+        Admin Orders Panel
+               │
+       Admin Payment Tracking
+
+
+
+------------------------------------------------------------------------------------------------
+
+
+
+
+🚀 MOST IMPORTANT: ORDER WE SHOULD DO IT
+
+Since you want to finish quickly, don't randomly jump between modules anymore.
+
+We'll do it in this exact order:
+
+PHASE 1 — Customer Authentication
+1. Customer password/schema
+2. Register API
+3. Login API
+4. Auth middleware
+5. Login page
+6. Register page
+7. Account page
+PHASE 2 — Public Product Connection
+8. Product API
+9. Category API
+10. Connect Toys page
+11. Connect Gifts page
+12. Connect Categories page
+13. Product listing
+14. Product details
+PHASE 3 — Shopping
+15. Cart backend
+16. Cart frontend
+17. Add to Cart
+18. Quantity update
+19. Remove item
+20. Cart totals
+PHASE 4 — Checkout
+21. Address
+22. Coupon
+23. Order creation
+24. COD
+PHASE 5 — Razorpay
+25. Create Razorpay order
+26. Razorpay frontend checkout
+27. Payment verification
+28. Payment database
+29. Payment success/failure
+PHASE 6 — Orders
+30. Customer My Orders
+31. Customer Order Details
+32. Admin Orders
+33. Admin Order Status
+34. Admin Payment Tracking
+PHASE 7 — Final Admin/Public Integration
+35. Reviews
+36. Banners
+37. Settings → Public website
+38. Product stock
+39. Coupon usage
+40. Final testing
+The final test we should be able to perform
+
+When we're finished, we should literally be able to do this:
+
+1. Open balmitra.com
+
+2. Click Sign Up
+
+3. Create:
+   John
+   john@gmail.com
+   9876543210
+   password
+
+4. Login
+
+5. Go to Toys
+
+6. Click a product
+
+7. Product details opens
+
+8. Click Add to Cart
+
+9. Open Cart
+
+10. Increase quantity
+
+11. Checkout
+
+12. Enter address
+
+13. Apply SAVE10
+
+14. Select Razorpay
+
+15. Pay ₹XXXX
+
+16. Payment succeeds
+
+17. Order created
+
+18. Customer sees:
+    My Orders → Order #BMXXXX
+
+19. Open Admin Panel
+
+20. Admin → Customers
+    John appears
+
+21. Admin → Orders
+    Order appears
+
+22. Admin → Payments
+    Payment appears as PAID
+
+23. Admin changes:
+    CONFIRMED → PACKED → SHIPPED → DELIVERED
+
+24. Customer sees updated status
+
+25. Customer reviews product
+
+26. Admin approves review
+
+27. Review appears on product page
+
+That is the definition of "complete" for this project.
+
+And importantly, your existing Admin modules—Products, Categories, Customers, Coupons, Payments, Settings, Dashboard, etc.—don't need to be thrown away. We now need to connect them to the public storefront and complete the missing customer/commerce flow.
+
+Next: Customer Authentication
+
+
+
+
+
+
+
+----------------------------new flow with the customer page adds ---------------------------------------------
+
+
+                    BALMITRA
+                       │
+             ┌─────────┴─────────┐
+             │                   │
+          GUEST              CUSTOMER
+             │                   │
+        Public Store        Login/Register
+             │                   │
+        View Products       Email/OTP Verify
+        View Categories          │
+        Product Details       Login                                       
+             │                   │
+        Login/Register      Customer Store
+                                 │
+                    ┌────────────┼────────────┐
+                    │            │            │
+                 Products    Categories    Search
+                    │            │            │
+                    └────────────┼────────────┘
+                                 │
+                              Product
+                                 │
+                              Cart
+                                 │
+                            Checkout
+                                 │
+                         Address + Summary
+                                 │
+                              Payment
+                                 │
+                         Payment Verification
+                                 │
+                           Order Created
+                                 │
+                         Order Confirmation
+                                 │
+                           My Orders
+
+
+
+
+                         ADMIN
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+    Categories          Products            Orders
+        │                  │                  │
+        └──────────────────┼──────────────────┘
+                           │
+                      Customers
+                           │
+                       Settings
+                           │
+                       Payments
+
+
+
+
+                    GUEST
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+       Browse                  Register
+          │                       │
+       Product                 Password
+          │                  Confirm Password
+       Product                    │
+       Details                  Email OTP
+          │                       │
+       Add Cart               Verify OTP
+          │                       │
+       Checkout                  Login
+          │                       │
+          └───────────┬───────────┘
+                      │
+                 CUSTOMER
+                      │
+              Customer Store
+                      │
+        ┌─────────────┼─────────────┐
+        │             │             │
+     Products     Categories     Wishlist
+        │             │             │
+        └─────────────┼─────────────┘
+                      │
+                    Cart
+                      │
+                  Checkout
+                      │
+               Select Address
+                      │
+                   Payment
+                      │
+                 Razorpay
+                      │
+              Backend Verify
+                      │
+                Order Created
+                      │
+              Order Confirmation
+                      │
+                  My Orders
+                      │
+              Track Order Status

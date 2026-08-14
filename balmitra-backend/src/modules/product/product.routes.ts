@@ -1,38 +1,14 @@
-console.log("✅ Product Routes Loaded");
-
 import { Router } from "express";
+
 import { ProductController } from "./product.controller";
+
 import { authenticateAdmin } from "../../middleware/auth.middleware";
-import { upload } from "./upload.middleware";
+
+import { upload } from "../../middleware/upload.middleware";
 
 const router = Router();
 
-/*
-|--------------------------------------------------------------------------
-| PUBLIC PRODUCT ROUTES
-|--------------------------------------------------------------------------
-*/
-
-// Public: Get all products
-router.get(
-  "/public",
-  ProductController.getAll
-);
-
-// Public: Get single product
-router.get(
-  "/public/:id",
-  ProductController.getById
-);
-
-
-/*
-|--------------------------------------------------------------------------
-| ADMIN PRODUCT ROUTES
-|--------------------------------------------------------------------------
-*/
-
-// Admin: Create Product
+// CREATE
 router.post(
   "/",
   authenticateAdmin,
@@ -40,20 +16,21 @@ router.post(
   ProductController.create
 );
 
-// Admin: Get All Products
+// GET ALL
 router.get(
   "/",
   authenticateAdmin,
   ProductController.getAll
 );
 
-// Admin: Get Single Product
+// GET ONE
 router.get(
   "/:id",
+  authenticateAdmin,
   ProductController.getById
 );
 
-// Admin: Update Product
+// UPDATE
 router.put(
   "/:id",
   authenticateAdmin,
@@ -61,7 +38,7 @@ router.put(
   ProductController.update
 );
 
-// Admin: Delete Product
+// DELETE
 router.delete(
   "/:id",
   authenticateAdmin,

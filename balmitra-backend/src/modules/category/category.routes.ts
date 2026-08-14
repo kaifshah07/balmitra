@@ -4,37 +4,28 @@ import { authenticateAdmin } from "../../middleware/auth.middleware";
 
 const router = Router();
 
-// Admin: create category
-router.post(
-"/",
-authenticateAdmin,
-CategoryController.create
-);
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 
-// Public: get all categories
-router.get(
-"/",
-CategoryController.getAll
-);
+router.get("/public", CategoryController.getAll);
 
-// Public: get single category
-router.get(
-"/:id",
-CategoryController.getById
-);
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
 
-// Admin: update category
-router.put(
-"/:id",
-authenticateAdmin,
-CategoryController.update
-);
+router.post("/", authenticateAdmin, CategoryController.create);
 
-// Admin: delete category
-router.delete(
-"/:id",
-authenticateAdmin,
-CategoryController.delete
-);
+router.get("/", authenticateAdmin, CategoryController.getAll);
+
+router.get("/:id", authenticateAdmin, CategoryController.getById);
+
+router.put("/:id", authenticateAdmin, CategoryController.update);
+
+router.delete("/:id", authenticateAdmin, CategoryController.delete);
 
 export default router;
