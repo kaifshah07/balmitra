@@ -7,10 +7,13 @@ const menu = [
   { name: "Dashboard", href: "/admin" },
   { name: "Products", href: "/admin/products" },
   { name: "Categories", href: "/admin/categories" },
+  { name: "Subcategories" , href:"/admin/subcategories"},
   { name: "Orders", href: "/admin/orders" },
   { name: "Customers", href: "/admin/customers" },
   { name: "Coupons", href: "/admin/coupons" },
-  { name: "Settings", href: "/admin/settings" },
+  { name: "Settings", href: "/admin/settings" }
+  
+
 ];
 
 export default function Sidebar() {

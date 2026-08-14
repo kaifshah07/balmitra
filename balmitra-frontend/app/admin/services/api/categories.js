@@ -1,10 +1,10 @@
 import api from "./api";
 
 /**
- * Get all categories
+ * Get public categories
  */
 export const getCategories = async () => {
-  const { data } = await api.get("/admin/categories");
+  const { data } = await api.get("/categories/public");
   return data.data;
 };
 
@@ -12,7 +12,7 @@ export const getCategories = async () => {
  * Get category by ID
  */
 export const getCategoryById = async (id) => {
-  const { data } = await api.get(`/admin/categories/${id}`);
+  const { data } = await api.get(`/categories/public/${id}`);
   return data.data;
 };
 
@@ -28,7 +28,11 @@ export const createCategory = async (categoryData) => {
  * Update category
  */
 export const updateCategory = async (id, categoryData) => {
-  const { data } = await api.put(`/admin/categories/${id}`, categoryData);
+  const { data } = await api.put(
+    `/admin/categories/${id}`,
+    categoryData
+  );
+
   return data;
 };
 
@@ -36,6 +40,9 @@ export const updateCategory = async (id, categoryData) => {
  * Delete category
  */
 export const deleteCategory = async (id) => {
-  const { data } = await api.delete(`/admin/categories/${id}`);
+  const { data } = await api.delete(
+    `/admin/categories/${id}`
+  );
+
   return data;
 };
