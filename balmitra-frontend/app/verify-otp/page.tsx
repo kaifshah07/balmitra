@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   verifyCustomerOtp,
   resendCustomerOtp,
 } from "../admin/services/api/customerAuth";
 
-export default function VerifyOtpPage() {
+function VerifyOtpContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -45,9 +45,9 @@ export default function VerifyOtpPage() {
       setMessage("");
 
       const result = await verifyCustomerOtp(
-  Number(customerId),
-  otp
-);
+        Number(customerId),
+        otp
+      );
 
       if (!result.success) {
         throw new Error(
@@ -63,10 +63,7 @@ export default function VerifyOtpPage() {
         );
       }
 
-      localStorage.setItem(
-        "customer_token",
-        token
-      );
+      localStorage.setItem("customer_token", token);
 
       if (result.data?.customer) {
         localStorage.setItem(
@@ -76,19 +73,12 @@ export default function VerifyOtpPage() {
       }
 
       router.push("/customer");
-
     } catch (error: any) {
-      console.error(
-        "OTP Verification Error:",
-        error
-      );
-
       setError(
         error?.response?.data?.message ||
         error?.message ||
         "OTP verification failed"
       );
-
     } finally {
       setLoading(false);
     }
@@ -102,34 +92,25 @@ export default function VerifyOtpPage() {
       setError("");
       setMessage("");
 
-      const result =
-        await resendCustomerOtp(
-          Number(customerId)
-        );
+      const result = await resendCustomerOtp(
+        Number(customerId)
+      );
 
       if (!result.success) {
         throw new Error(
-          result.message ||
-          "Unable to resend OTP"
+          result.message || "Unable to resend OTP"
         );
       }
 
       setMessage(
         "A new verification OTP has been sent to your email."
       );
-
     } catch (error: any) {
-      console.error(
-        "Resend OTP Error:",
-        error
-      );
-
       setError(
         error?.response?.data?.message ||
         error?.message ||
         "Unable to resend OTP"
       );
-
     } finally {
       setResending(false);
     }
@@ -137,9 +118,7 @@ export default function VerifyOtpPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#FAFAF8] px-4">
-
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm">
-
         <h1 className="text-3xl font-bold text-[#0B1220]">
           Verify Your Email
         </h1>
@@ -168,9 +147,7 @@ export default function VerifyOtpPage() {
           onSubmit={handleVerify}
           className="mt-8 space-y-5"
         >
-
           <div>
-
             <label className="mb-2 block text-sm font-medium">
               Verification OTP
             </label>
@@ -190,7 +167,6 @@ export default function VerifyOtpPage() {
               placeholder="Enter 6-digit OTP"
               className="w-full rounded-lg border p-3 text-center text-xl tracking-[0.4em] outline-none focus:border-[#C67C2E]"
             />
-
           </div>
 
           <button
@@ -198,15 +174,11 @@ export default function VerifyOtpPage() {
             disabled={loading || otp.length !== 6}
             className="w-full rounded-lg bg-[#C67C2E] px-6 py-3 font-semibold text-white transition hover:bg-[#A7641E] disabled:bg-gray-300"
           >
-            {loading
-              ? "Verifying..."
-              : "Verify Email"}
+            {loading ? "Verifying..." : "Verify Email"}
           </button>
-
         </form>
 
         <div className="mt-6 text-center">
-
           <p className="text-sm text-gray-500">
             Didn't receive the OTP?
           </p>
@@ -217,15 +189,18 @@ export default function VerifyOtpPage() {
             disabled={resending}
             className="mt-2 font-semibold text-[#C67C2E] hover:underline disabled:text-gray-400"
           >
-            {resending
-              ? "Sending..."
-              : "Resend OTP"}
+            {resending ? "Sending..." : "Resend OTP"}
           </button>
-
         </div>
-
       </div>
-
     </main>
+  );
+}
+
+export default function VerifyOtpPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyOtpContent />
+    </Suspense>
   );
 }
