@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Admin {
@@ -75,7 +76,7 @@ model Product {
   sku  String @unique
 
   shortDescription String?
-  description      String? @db.LongText
+  description      String? 
 
   brand    String?
   ageGroup String?
