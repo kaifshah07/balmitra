@@ -14,12 +14,13 @@ const app = express();
 app.use(helmet());
 
 // CORS
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://.vercel.app"
+  ],
+  credentials: true
+}));
 
 // Body Parser
 app.use(express.json());
