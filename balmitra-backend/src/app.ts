@@ -17,7 +17,7 @@ app.use(helmet());
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://.vercel.app"
+    "https://balmitra.vercel.app/"
   ],
   credentials: true
 }));
