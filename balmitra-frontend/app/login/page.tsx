@@ -135,6 +135,13 @@ export default function LoginPage() {
             </label>
 
             <input
+  type="password"
+  name="password"
+  placeholder="Enter your password"
+  autoComplete="current-password"
+/>
+
+            {/* <input
               type="password"
               name="password"
               value={form.password}
@@ -142,7 +149,7 @@ export default function LoginPage() {
               placeholder="Enter your password"
               required
               className="w-full rounded-lg border p-3 outline-none focus:border-[#C67C2E]"
-            />
+            /> */}
 
           </div>
 
