@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingCart, Star } from "lucide-react";
+import { productImageUrl } from "@/lib/api";
 
 type Product = {
   id: number;
@@ -24,9 +25,7 @@ interface ProductCardProps {
 export default function ProductCard({
   product,
 }: ProductCardProps) {
-  const imageUrl = product.thumbnail
-    ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${product.thumbnail}`
-    : "/images/placeholder.png";
+  const imageUrl = productImageUrl(product.thumbnail);
 
   const displayPrice =
     product.discountPrice !== null &&
@@ -35,11 +34,11 @@ export default function ProductCard({
       : Number(product.price);
 
   return (
-    <div className="group overflow-hidden rounded-[32px] bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl">
+    <div className="group overflow-hidden rounded-[28px] border border-orange-100/70 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-orange-200 hover:shadow-xl">
 
       {/* IMAGE */}
 
-      <div className="relative flex h-60 items-center justify-center overflow-hidden bg-[#F7F5F1]">
+      <div className="relative flex h-64 items-center justify-center overflow-hidden bg-gradient-to-br from-[#FFF8EF] via-[#F7F5F1] to-[#F1E9DE]">
 
         <button
           type="button"
@@ -58,7 +57,7 @@ export default function ProductCard({
             width={250}
             height={250}
             unoptimized
-            className="h-48 w-48 object-contain transition duration-500 group-hover:scale-110"
+            className="h-52 w-52 object-contain drop-shadow-xl transition duration-500 group-hover:scale-110"
           />
         </Link>
 
@@ -77,14 +76,14 @@ export default function ProductCard({
           />
 
           <span className="text-sm font-medium text-gray-600">
-            New
+            Curated pick
           </span>
 
         </div>
 
         <Link href={`/products/${product.id}`}>
 
-          <h3 className="text-lg font-bold text-[#0B1220] hover:text-[#C67C2E]">
+          <h3 className="line-clamp-1 text-lg font-bold text-[#0B1220] hover:text-[#C67C2E]">
             {product.name}
           </h3>
 

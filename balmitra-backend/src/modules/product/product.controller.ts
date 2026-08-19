@@ -7,6 +7,13 @@ export class ProductController {
   // =========================
 static async create(req: Request, res: Response) {
   try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "A product image is required. Select an image and try again.",
+      });
+    }
+
     const product = await ProductService.create({
       ...req.body,
       file: req.file,

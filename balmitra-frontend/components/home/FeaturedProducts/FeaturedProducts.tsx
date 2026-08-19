@@ -1,10 +1,24 @@
+"use client";
+
 import Container from "@/components/ui/container";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import ProductCard from "./ProductCard";
-import { products } from "./productData";
+import { getPublicProducts } from "@/app/admin/services/api/products";
+
+type Product = React.ComponentProps<typeof ProductCard>["product"];
 
 export default function FeaturedProducts() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    getPublicProducts()
+      .then((data) => setProducts(data.slice(0, 4)))
+      .catch(() => setProducts([]));
+  }, []);
+
   return (
     <section className="bg-[#FCFBF8] py-16 lg:py-20">
 
@@ -36,7 +50,8 @@ export default function FeaturedProducts() {
 
 
 
-          <button
+          <Link
+            href="/customer/products"
             className="hidden items-center gap-2 rounded-full border border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-[#0B1220] transition hover:border-[#C67C2E] hover:text-[#C67C2E] md:flex"
           >
 
@@ -44,7 +59,7 @@ export default function FeaturedProducts() {
 
             <ArrowRight size={18} />
 
-          </button>
+          </Link>
 
 
         </div>
@@ -66,6 +81,12 @@ export default function FeaturedProducts() {
           ))}
 
         </div>
+
+        {!products.length && (
+          <p className="mt-6 text-center text-sm text-gray-500">
+            No products are available yet. Add and publish products from the admin dashboard.
+          </p>
+        )}
 
 
       </Container>

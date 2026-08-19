@@ -6,6 +6,7 @@ export class CategoryService {
     description?: string;
     image?: string;
     displayOrder?: number;
+    isActive?: boolean | string;
   }) {
     const slug = data.name
       .toLowerCase()
@@ -29,6 +30,11 @@ export class CategoryService {
       data: {
         ...data,
         slug,
+        displayOrder: Number(data.displayOrder || 0),
+        isActive:
+          data.isActive === undefined
+            ? true
+            : data.isActive === true || data.isActive === "true",
       },
     });
   }
@@ -48,9 +54,19 @@ export class CategoryService {
   }
 
   static async update(id: number, data: any) {
+    const updateData = {
+      ...data,
+      ...(data.displayOrder !== undefined && {
+        displayOrder: Number(data.displayOrder || 0),
+      }),
+      ...(data.isActive !== undefined && {
+        isActive: data.isActive === true || data.isActive === "true",
+      }),
+    };
+
     return prisma.category.update({
       where: { id },
-      data,
+      data: updateData,
     });
   }
 

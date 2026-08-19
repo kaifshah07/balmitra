@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import { API_URL } from "@/lib/api";
 
 type Product = {
 id: number;
@@ -67,7 +68,7 @@ const token = localStorage.getItem("customer_token");
   }
 
   const response = await fetch(
-    "${process.env.NEXT_PUBLIC_API_URL}/orders/my-orders/${orderId}",
+    `${API_URL}/orders/my-orders/${orderId}`,
     {
       method: "GET",
       headers: {

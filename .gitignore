@@ -25,5 +25,13 @@ Thumbs.db
 # Large files
 *.zip
 
+# Private deployment material (kept locally, never committed)
+balmitra db credentials.jpg
+balmitra flow.txt
+balmitra vercel.jpg
+jwt error.txt
+postgrace sql.txt
+
 # Backend
 balmitra-backend/uploads/
+balmitra-backend/.agents/

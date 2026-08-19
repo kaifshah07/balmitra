@@ -43,45 +43,64 @@ export default function CategoriesPage() {
   };
 
   return (
-    <div>
-      {/* Header */}
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">
-          Categories
-        </h1>
+    <div className="min-h-screen bg-[#F7F7F5] p-6 lg:p-8">
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wider text-orange-500">
+            Catalog Management
+          </p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900">
+            Categories
+          </h1>
+          <p className="mt-2 text-sm text-gray-500">
+            Create the main groups customers use to browse your catalogue.
+          </p>
+        </div>
 
         <button
           onClick={() => {
             setSelectedCategory(null);
             setShowForm(true);
           }}
-          className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg"
+          className="rounded-xl bg-orange-500 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-orange-600"
         >
           + Add Category
         </button>
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {categories.length === 0 ? (
-          <div className="col-span-full bg-white rounded-xl shadow p-10 text-center text-gray-500">
-            No Categories Found
+          <div className="col-span-full rounded-2xl bg-white p-12 text-center text-gray-500 shadow-sm">
+            No categories found. Create your first category to begin adding products.
           </div>
         ) : (
           categories.map((category) => (
             <div
               key={category.id}
-              className="bg-white shadow rounded-xl p-6"
+              className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
             >
-              <h2 className="text-xl font-semibold">
+              {category.image && (
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="mb-5 h-36 w-full rounded-xl object-cover"
+                />
+              )}
+              <div className="flex items-start justify-between gap-4">
+                <h2 className="text-xl font-semibold text-gray-900">
                 {category.name}
-              </h2>
+                </h2>
+                <span className={category.isActive !== false ? "rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700" : "rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-500"}>
+                  {category.isActive !== false ? "Active" : "Inactive"}
+                </span>
+              </div>
 
-              <p className="text-gray-500 mt-2">
+              <p className="mt-3 min-h-12 text-sm leading-6 text-gray-500">
                 {category.description || "No description"}
               </p>
 
-              <p className="text-sm text-gray-400 mt-2">
+              <p className="mt-4 text-xs font-medium text-gray-400">
                 Display Order: {category.displayOrder}
               </p>
 
@@ -91,14 +110,14 @@ export default function CategoriesPage() {
                     setSelectedCategory(category);
                     setShowForm(true);
                   }}
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+                  className="rounded-lg border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
                 >
                   Edit
                 </button>
 
                 <button
                   onClick={() => handleDelete(category.id)}
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+                  className="rounded-lg border border-red-100 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-100"
                 >
                   Delete
                 </button>
@@ -110,8 +129,8 @@ export default function CategoriesPage() {
 
       {/* Modal */}
       {showForm && (
-        <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
-          <div className="bg-white rounded-xl p-8 w-full max-w-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-8 shadow-2xl">
             <CategoryForm
               category={selectedCategory}
               onClose={() => setShowForm(false)}

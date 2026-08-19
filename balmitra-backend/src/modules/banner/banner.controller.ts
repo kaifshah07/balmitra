@@ -1,13 +1,19 @@
 import { Request, Response } from "express";
 import { BannerService } from "./banner.service";
+import { uploadToCloudinary } from "../../utils/cloudinaryUpload";
 
 export class BannerController {
 
   static async create(req: Request, res: Response) {
     try {
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: "Banner image is required" });
+      }
+
+      const upload = await uploadToCloudinary(req.file.buffer, "balmitra/banners");
       const banner = await BannerService.create({
         ...req.body,
-        image: req.file?.filename,
+        image: upload.secure_url,
       });
 
       return res.status(201).json({
@@ -42,11 +48,15 @@ export class BannerController {
   }
 
   static async update(req: Request, res: Response) {
+    const upload = req.file
+      ? await uploadToCloudinary(req.file.buffer, "balmitra/banners")
+      : null;
+
     const banner = await BannerService.update(
       Number(req.params.id),
       {
         ...req.body,
-        ...(req.file && { image: req.file.filename }),
+        ...(upload && { image: upload.secure_url }),
       }
     );
 

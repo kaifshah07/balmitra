@@ -1,5 +1,6 @@
 import cloudinary from "../config/cloudinary";
 import { Readable } from "stream";
+import { env } from "../config/env";
 
 export const uploadToCloudinary = (
   buffer: Buffer,
@@ -8,6 +9,16 @@ export const uploadToCloudinary = (
   secure_url: string;
   public_id: string;
 }> => {
+  if (
+    !env.CLOUDINARY_CLOUD_NAME ||
+    !env.CLOUDINARY_API_KEY ||
+    !env.CLOUDINARY_API_SECRET
+  ) {
+    return Promise.reject(
+      new Error("Cloudinary is not configured. Add the Cloudinary environment variables to the backend.")
+    );
+  }
+
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {

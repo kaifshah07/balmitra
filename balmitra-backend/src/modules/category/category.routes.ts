@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { CategoryController } from "./category.controller";
 import { authenticateAdmin } from "../../middleware/auth.middleware";
+import { upload } from "../../middleware/upload.middleware";
 
 const router = Router();
 
@@ -18,13 +19,13 @@ router.get("/public", CategoryController.getAll);
 |--------------------------------------------------------------------------
 */
 
-router.post("/", authenticateAdmin, CategoryController.create);
+router.post("/", authenticateAdmin, upload.single("image"), CategoryController.create);
 
 router.get("/", authenticateAdmin, CategoryController.getAll);
 
 router.get("/:id", authenticateAdmin, CategoryController.getById);
 
-router.put("/:id", authenticateAdmin, CategoryController.update);
+router.put("/:id", authenticateAdmin, upload.single("image"), CategoryController.update);
 
 router.delete("/:id", authenticateAdmin, CategoryController.delete);
 

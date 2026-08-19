@@ -1,0 +1,413 @@
+Absolutely. Let's treat this as our Balmitra Deployment Checklist. We will go through it one item at a time, in the order below, and won't jump ahead.
+
+🚀 Balmitra — Complete Deployment Checklist
+🔴 Phase 1 — Fix Deployment Blockers
+1. Fix Prisma Database/Migration Mismatch
+ Confirm production database = Supabase PostgreSQL
+ Remove/replace old MySQL migration history
+ Create a clean PostgreSQL migration
+ Validate Prisma schema
+ Run Prisma generation
+ Test migrations against production database
+ Confirm all tables/relations are created correctly
+
+Priority: 🔴 Critical
+
+2. Secure Environment Variables & Secrets
+ Remove .env from the project/repository
+ Make sure .env is in .gitignore
+ Create/update .env.example
+ Rotate exposed database credentials
+ Rotate JWT secret
+ Rotate Cloudinary secret
+ Rotate Brevo API key
+ Check Razorpay credentials
+ Check initial admin credentials
+ Never commit production secrets to GitHub
+
+Priority: 🔴 Critical
+
+3. Fix Frontend Build Errors
+
+Fix the imports/files we found:
+
+ Fix franchise.js → incorrect ./axios import
+ Fix OrderTable.jsx → missing navigation import/file
+ Search the entire frontend for other missing imports
+ Search for incorrect file casing
+ Search for unused/broken module references
+ Run a complete production build
+
+Priority: 🔴 Critical
+
+🟠 Phase 2 — Production Configuration
+4. Clean Backend Configuration
+ Change NODE_ENV=development → production
+ Fix stale "MySQL Database Connected" message
+ Verify backend PORT
+ Verify database configuration
+ Verify JWT configuration
+ Verify Cloudinary configuration
+ Verify Brevo configuration
+ Verify Razorpay configuration
+ Verify admin configuration
+5. Clean Frontend Environment Configuration
+ Remove dependency on local .env.local
+ Verify NEXT_PUBLIC_API_URL
+ Verify NEXT_PUBLIC_BACKEND_URL
+ Make sure production URLs are used
+ Make sure no localhost URLs remain
+6. Remove Hardcoded Backend URLs
+
+Search the entire frontend for:
+
+localhost
+127.0.0.1
+balmitra.onrender.com
+http://
+https://
+
+Then replace hardcoded API/image URLs with environment-based configuration where appropriate.
+
+7. Standardize API Endpoints
+ Review frontend API services
+ Compare every frontend endpoint with backend routes
+ Fix inconsistent category endpoints
+ Verify product endpoints
+ Verify order endpoints
+ Verify authentication endpoints
+ Verify admin endpoints
+ Verify customer endpoints
+ Verify enquiry endpoints
+ Verify upload/image endpoints
+🟡 Phase 3 — Backend Production Readiness
+8. Configure CORS
+ Add production frontend domain
+ Add www domain if applicable
+ Keep localhost only for development
+ Verify credentials/cookies configuration
+ Test frontend → backend requests
+9. Test Authentication
+ Admin login
+ Customer registration
+ Customer login
+ JWT generation
+ JWT verification
+ Protected admin routes
+ Protected customer routes
+ Invalid/expired token handling
+10. Test File/Image Uploads
+ Cloudinary connection
+ Product image upload
+ Category image upload
+ Banner upload
+ Image deletion
+ Production image URLs
+ Verify frontend displays uploaded images
+11. Test Email System
+ Brevo configuration
+ Admin email
+ Customer email
+ Enquiry emails
+ Order emails if implemented
+ Production sender email/domain
+ Verify emails actually arrive
+12. Test Razorpay
+
+If Razorpay is part of the current production flow:
+
+ Razorpay key configuration
+ Create payment order
+ Payment verification
+ Signature verification
+ Webhook configuration
+ Webhook URL
+ Success flow
+ Failure flow
+ Order/payment status updates
+🟢 Phase 4 — Clean the Repository
+13. Clean Backend Repository
+
+Remove from Git:
+
+.env
+node_modules/
+dist/
+
+Keep:
+
+.env.example
+package.json
+package-lock.json
+src/
+prisma/
+tsconfig.json
+.gitignore
+14. Clean Frontend Repository
+
+Check/remove:
+
+.env.local
+node_modules/
+.next/
+
+Make sure:
+
+.env.example
+
+contains only placeholder values.
+
+15. GitHub Security Check
+ Check Git history for secrets
+ Check committed .env
+ Check API keys
+ Check passwords
+ Check database URLs
+ Rotate anything that was exposed
+ Push clean repository
+🔵 Phase 5 — Production Build Testing
+16. Backend Build Test
+
+Run:
+
+npm install
+npm run build
+
+Then:
+
+npm start
+
+Verify backend starts successfully.
+
+17. Frontend Build Test
+
+Run:
+
+npm install
+npm run build
+
+Then:
+
+npm start
+
+Verify the production Next.js application works.
+
+18. API Testing
+
+Test the important APIs using Postman:
+
+ Health check
+ Auth
+ Categories
+ Subcategories
+ Products
+ Cart
+ Orders
+ Payments
+ Coupons
+ Reviews
+ Admin
+ Enquiries
+ Uploads
+🟣 Phase 6 — Deploy Backend
+19. Choose Backend Hosting
+
+We will decide the best backend hosting platform based on the final configuration.
+
+Then:
+
+ Create production service
+ Connect GitHub repository
+ Configure build command
+ Configure start command
+ Add environment variables
+ Deploy
+ Check deployment logs
+ Verify backend URL
+20. Configure Production Database
+ Connect Supabase
+ Run Prisma migration
+ Verify tables
+ Verify indexes/relations
+ Verify database connection
+ Test API against production database
+🟢 Phase 7 — Deploy Frontend
+21. Deploy Next.js to Vercel
+ Connect GitHub repository
+ Select correct root directory
+ Configure environment variables
+ Deploy
+ Check build logs
+ Open production URL
+ Verify frontend loads
+22. Connect Frontend → Production Backend
+
+Update:
+
+NEXT_PUBLIC_API_URL
+
+to the actual backend URL.
+
+Then test:
+
+Frontend
+   ↓
+Backend
+   ↓
+Database
+🌐 Phase 8 — Custom Domain
+23. Configure Domain
+ Add domain to Vercel
+ Configure DNS
+ Configure A/CNAME records as required
+ Verify DNS
+ Enable HTTPS
+ Test root domain
+ Test www
+ Redirect one to the other if required
+24. Update Backend CORS
+
+Once the final domain is known:
+
+CORS_ORIGINS=
+https://yourdomain.com,
+https://www.yourdomain.com
+
+Then redeploy backend.
+
+🧪 Phase 9 — Full Production Testing
+25. Customer Flow
+
+Test the complete journey:
+
+Homepage
+ ↓
+Categories
+ ↓
+Product
+ ↓
+Cart
+ ↓
+Login
+ ↓
+Address
+ ↓
+Checkout
+ ↓
+Payment
+ ↓
+Order
+ ↓
+Order history
+26. Admin Flow
+
+Test:
+
+Admin Login
+ ↓
+Dashboard
+ ↓
+Categories
+ ↓
+Products
+ ↓
+Banners
+ ↓
+Orders
+ ↓
+Customers
+ ↓
+Coupons
+ ↓
+Reviews
+ ↓
+Enquiries
+27. Mobile Testing
+
+Test:
+
+ Mobile navbar
+ Product pages
+ Cart
+ Checkout
+ Login
+ Admin panel
+ Forms
+ Images
+ Buttons
+ Tables
+🔐 Phase 10 — Final Production Security
+28. Security Review
+ No secrets in GitHub
+ HTTPS everywhere
+ CORS restricted
+ JWT secret secured
+ Rate limiting enabled
+ Helmet enabled
+ Input validation enabled
+ Admin authorization verified
+ Database credentials secured
+ Cloudinary credentials secured
+ Payment credentials secured
+🏁 Phase 11 — Final Go-Live
+29. Final Production Checklist
+ Backend healthy
+ Database healthy
+ Frontend healthy
+ APIs working
+ Authentication working
+ Images working
+ Emails working
+ Payments working
+ Admin working
+ Customer flow working
+ Custom domain working
+ HTTPS working
+ No console errors
+ No server errors
+ No broken API requests
+30. 🚀 Go Live
+
+Only after everything above is green:
+
+Balmitra → Production
+
+Our order of work
+
+I recommend we do not jump around. We'll work like this:
+
+1. Prisma / PostgreSQL migration
+        ↓
+2. Secrets & .env
+        ↓
+3. Frontend build errors
+        ↓
+4. Backend production config
+        ↓
+5. Frontend production config
+        ↓
+6. API consistency
+        ↓
+7. CORS
+        ↓
+8. Repository cleanup
+        ↓
+9. Local production builds
+        ↓
+10. API testing
+        ↓
+11. Backend deployment
+        ↓
+12. Database production setup
+        ↓
+13. Frontend deployment
+        ↓
+14. Domain
+        ↓
+15. Full production testing
+        ↓
+16. Security review
+        ↓
+17. 🚀 GO LIVE
+
+Start with #1: Prisma/PostgreSQL migration. That's currently the most important blocker because we don't want to deploy the backend and then discover that the database migration history is incompatible with PostgreSQL.

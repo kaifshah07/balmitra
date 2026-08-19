@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { ShoppingCart, ArrowRight } from "lucide-react";
 
 import { getPublicProducts } from "@/app/admin/services/api/products";
+import { productImageUrl } from "@/lib/api";
 
 type Product = {
   id: number;
@@ -208,9 +209,7 @@ export default function CustomerProductsPage() {
                 product.discountPrice !== null &&
                 product.discountPrice !== undefined;
 
-              const imageUrl = product.thumbnail
-                ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${product.thumbnail}`
-                : "/images/placeholder.png";
+              const imageUrl = productImageUrl(product.thumbnail);
 
               const isOutOfStock =
                 product.stock <= 0;

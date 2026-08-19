@@ -60,12 +60,10 @@ export default function AdminDashboard() {
       setLoading(true);
 
       const data = await getDashboard();
-
-      if (data.success) {
+      if (data?.statistics) {
         setDashboard(data);
       }
-    } catch (err) {
-      console.error(err);
+    } catch {
     } finally {
       setLoading(false);
     }
@@ -96,7 +94,7 @@ export default function AdminDashboard() {
           </p>
 
           <h2 className="text-3xl font-bold mt-2">
-            {dashboard.statistics.totalProducts}
+            {dashboard?.statistics?.totalProducts ?? 0}
           </h2>
         </div>
 
@@ -106,7 +104,7 @@ export default function AdminDashboard() {
           </p>
 
           <h2 className="text-3xl font-bold mt-2">
-            {dashboard.statistics.totalCategories}
+            {dashboard?.statistics?.totalCategories ?? 0}
           </h2>
         </div>
 
@@ -116,7 +114,7 @@ export default function AdminDashboard() {
           </p>
 
           <h2 className="text-3xl font-bold mt-2">
-            {dashboard.statistics.totalOrders}
+            {dashboard?.statistics?.totalOrders ?? 0}
           </h2>
         </div>
 
@@ -126,7 +124,7 @@ export default function AdminDashboard() {
           </p>
 
           <h2 className="text-3xl font-bold mt-2">
-            ₹{dashboard.statistics.totalRevenue}
+            ₹{dashboard?.statistics?.totalRevenue ?? 0}
           </h2>
         </div>
 

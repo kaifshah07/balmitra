@@ -42,6 +42,15 @@ export class SubCategoryService {
   static async create(data: any) {
     const categoryId = Number(data.categoryId);
 
+    if (!Number.isInteger(categoryId) || categoryId <= 0) {
+      throw new Error("Please select a valid parent category");
+    }
+
+    const name = String(data.name || "").trim();
+    if (name.length < 2) {
+      throw new Error("Subcategory name must contain at least 2 characters");
+    }
+
     // Make sure category exists
     const category = await prisma.category.findUnique({
       where: {
@@ -53,14 +62,25 @@ export class SubCategoryService {
       throw new Error("Category not found");
     }
 
-    const slug = data.name
+    const slug = name
       .toLowerCase()
       .trim()
       .replace(/\s+/g, "-");
 
+    const existing = await prisma.subcategory.findFirst({
+      where: {
+        categoryId,
+        OR: [{ name }, { slug }],
+      },
+    });
+
+    if (existing) {
+      throw new Error("This subcategory already exists in the selected category");
+    }
+
     return prisma.subcategory.create({
       data: {
-        name: data.name,
+        name,
         slug,
         description: data.description || null,
         image: data.image || null,

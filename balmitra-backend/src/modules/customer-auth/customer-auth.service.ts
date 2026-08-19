@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { prisma } from "../../config/database";
 import { sendOtpEmail } from "../../config/brevo";
+import { env } from "../../config/env";
 
 function generateOtp() {
   return Math.floor(100000 + Math.random() * 900000).toString();
@@ -21,7 +22,7 @@ function generateToken(customer: {
       email: customer.email,
       role: "CUSTOMER",
     },
-    process.env.JWT_SECRET as string,
+    env.JWT_SECRET,
     {
       expiresIn: "7d",
     }

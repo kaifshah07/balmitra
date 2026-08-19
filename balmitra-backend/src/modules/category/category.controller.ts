@@ -1,11 +1,15 @@
 import { Request, Response } from "express";
 import { CategoryService } from "./category.service";
+import { uploadToCloudinary } from "../../utils/cloudinaryUpload";
 
 export class CategoryController {
 
   static async create(req: Request, res: Response) {
     try {
-      const category = await CategoryService.create(req.body);
+      const image = req.file
+        ? (await uploadToCloudinary(req.file.buffer, "balmitra/categories")).secure_url
+        : undefined;
+      const category = await CategoryService.create({ ...req.body, ...(image && { image }) });
 
       return res.status(201).json({
         success: true,
@@ -60,7 +64,10 @@ export class CategoryController {
 
     const id = Number(req.params.id);
 
-    const category = await CategoryService.update(id, req.body);
+    const image = req.file
+      ? (await uploadToCloudinary(req.file.buffer, "balmitra/categories")).secure_url
+      : undefined;
+    const category = await CategoryService.update(id, { ...req.body, ...(image && { image }) });
 
     return res.json({
       success: true,

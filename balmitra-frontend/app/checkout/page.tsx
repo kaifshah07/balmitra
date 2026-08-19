@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/lib/api";
 
 type CartItem = {
   productId: number;
@@ -55,7 +56,7 @@ export default function CheckoutPage() {
  async function loadCustomer(token: string) {
   try {
     const url =
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/customer/me`;
+      `${API_URL}/auth/customer/me`;
 
     console.log("Calling customer API:", url);
 
@@ -173,7 +174,7 @@ setLoading(true);
 
 
 const response = await fetch(
-  "${process.env.NEXT_PUBLIC_API_URL}/orders",
+  `${API_URL}/orders`,
   {
     method: "POST",
     headers: {

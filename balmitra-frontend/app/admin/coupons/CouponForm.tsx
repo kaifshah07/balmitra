@@ -138,25 +138,28 @@ export default function CouponForm({
 
     <form
       onSubmit={handleSubmit}
-      className="space-y-5"
+      className="space-y-6 rounded-2xl bg-white"
     >
 
 
-      <div className="flex justify-between items-center">
+      <div className="flex items-start justify-between border-b border-gray-100 pb-5">
 
-        <h2 className="text-2xl font-bold">
+        <div>
+        <h2 className="text-2xl font-bold text-gray-900">
 
           {coupon
             ? "Edit Coupon"
             : "Add Coupon"}
 
         </h2>
+        <p className="mt-1 text-sm text-gray-500">Set the code, discount rules, and expiry for this promotion.</p>
+        </div>
 
 
         <button
           type="button"
           onClick={onClose}
-          className="text-xl"
+          className="rounded-lg px-3 py-2 text-xl text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
         >
 
           ✕
@@ -168,6 +171,8 @@ export default function CouponForm({
 
 
 
+      <div>
+      <label className="mb-2 block text-sm font-semibold text-gray-700">Coupon code <span className="text-red-500">*</span></label>
       <input
 
         name="code"
@@ -178,14 +183,18 @@ export default function CouponForm({
 
         placeholder="Coupon Code"
 
-        className="w-full border rounded-lg p-3"
+        className="w-full rounded-xl border border-gray-200 p-3 uppercase outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
 
         required
 
       />
+      <p className="mt-1 text-xs text-gray-400">Example: WELCOME10</p>
+      </div>
 
 
 
+      <div>
+      <label className="mb-2 block text-sm font-semibold text-gray-700">Customer-facing description</label>
       <textarea
 
         name="description"
@@ -196,12 +205,17 @@ export default function CouponForm({
 
         placeholder="Description"
 
-        className="w-full border rounded-lg p-3"
+        rows={3}
+        className="w-full resize-none rounded-xl border border-gray-200 p-3 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
 
       />
+      </div>
 
 
 
+      <div className="grid gap-5 sm:grid-cols-2">
+      <div>
+      <label className="mb-2 block text-sm font-semibold text-gray-700">Discount type</label>
       <select
 
         name="discountType"
@@ -210,7 +224,7 @@ export default function CouponForm({
 
         onChange={handleChange}
 
-        className="w-full border rounded-lg p-3"
+        className="w-full rounded-xl border border-gray-200 bg-white p-3 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
 
       >
 
@@ -225,10 +239,13 @@ export default function CouponForm({
 
 
       </select>
+      </div>
 
 
 
 
+      <div>
+      <label className="mb-2 block text-sm font-semibold text-gray-700">Discount value <span className="text-red-500">*</span></label>
       <input
 
         type="number"
@@ -241,14 +258,20 @@ export default function CouponForm({
 
         placeholder="Discount Value"
 
-        className="w-full border rounded-lg p-3"
+        min="0"
+        className="w-full rounded-xl border border-gray-200 p-3 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
 
         required
 
       />
+      </div>
+      </div>
 
 
 
+      <div className="grid gap-5 sm:grid-cols-2">
+      <div>
+      <label className="mb-2 block text-sm font-semibold text-gray-700">Minimum order amount</label>
       <input
 
         type="number"
@@ -261,12 +284,16 @@ export default function CouponForm({
 
         placeholder="Minimum Order Amount"
 
-        className="w-full border rounded-lg p-3"
+        min="0"
+        className="w-full rounded-xl border border-gray-200 p-3 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
 
       />
+      </div>
 
 
 
+      <div>
+      <label className="mb-2 block text-sm font-semibold text-gray-700">Maximum discount amount</label>
       <input
 
         type="number"
@@ -279,12 +306,18 @@ export default function CouponForm({
 
         placeholder="Maximum Discount"
 
-        className="w-full border rounded-lg p-3"
+        min="0"
+        className="w-full rounded-xl border border-gray-200 p-3 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
 
       />
+      </div>
+      </div>
 
 
 
+      <div className="grid gap-5 sm:grid-cols-2">
+      <div>
+      <label className="mb-2 block text-sm font-semibold text-gray-700">Usage limit</label>
       <input
 
         type="number"
@@ -297,12 +330,16 @@ export default function CouponForm({
 
         placeholder="Usage Limit"
 
-        className="w-full border rounded-lg p-3"
+        min="0"
+        className="w-full rounded-xl border border-gray-200 p-3 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
 
       />
+      </div>
 
 
 
+      <div>
+      <label className="mb-2 block text-sm font-semibold text-gray-700">Expiry date</label>
       <input
 
         type="date"
@@ -313,9 +350,11 @@ export default function CouponForm({
 
         onChange={handleChange}
 
-        className="w-full border rounded-lg p-3"
+        className="w-full rounded-xl border border-gray-200 p-3 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
 
       />
+      </div>
+      </div>
 
 
 
@@ -329,7 +368,7 @@ export default function CouponForm({
 
           type="submit"
 
-          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg"
+          className="rounded-xl bg-orange-500 px-6 py-3 font-semibold text-white transition hover:bg-orange-600 disabled:opacity-50"
 
         >
 
@@ -350,7 +389,7 @@ export default function CouponForm({
 
           onClick={onClose}
 
-          className="border px-6 py-3 rounded-lg"
+          className="rounded-xl border border-gray-200 px-6 py-3 font-semibold text-gray-700 transition hover:bg-gray-50"
 
         >
 

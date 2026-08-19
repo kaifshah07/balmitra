@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import HeroSlider from "@/components/home/hero/HeroSlider";
+import { productImageUrl } from "@/lib/api";
 import { getPublicProducts } from "@/app/admin/services/api/products";
 import { getPublicCategories } from "@/app/admin/services/api/publicCategories";
 
@@ -332,10 +333,7 @@ export default function CustomerPage() {
                       product.discountPrice !== null &&
                       product.discountPrice !== undefined;
 
-                    const imageUrl =
-                      product.thumbnail
-                        ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${product.thumbnail}`
-                        : "/images/placeholder.png";
+                    const imageUrl = productImageUrl(product.thumbnail);
 
                     const isOutOfStock =
                       product.stock <= 0;

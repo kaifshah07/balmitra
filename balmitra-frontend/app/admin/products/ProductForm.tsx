@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { productImageUrl } from "@/lib/api";
 
 import { getCategories } from "../services/api/categories";
+import { getSubCategoriesByCategory } from "../services/api/subcategories";
 import {
   createProduct,
   updateProduct,
@@ -20,12 +22,18 @@ interface Category {
   name: string;
 }
 
+interface SubCategory {
+  id: number;
+  name: string;
+}
+
 export default function ProductForm({
   product,
   onClose,
   onSuccess,
 }: ProductFormProps) {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -33,6 +41,7 @@ export default function ProductForm({
     name: "",
     description: "",
     categoryId: "",
+    subcategoryId: "",
     price: "",
     discountPrice: "",
     stock: "",
@@ -55,6 +64,7 @@ export default function ProductForm({
         name: product.name || "",
         description: product.description || "",
         categoryId: product.categoryId || "",
+        subcategoryId: product.subcategoryId || "",
         price: product.price || "",
         discountPrice: product.discountPrice || "",
         stock: product.stock ?? "",
@@ -71,13 +81,38 @@ export default function ProductForm({
       // Existing product image
       if (product.thumbnail) {
         setImagePreview(
-         `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${product.thumbnail}`
+         productImageUrl(product.thumbnail)
         );
       }
     } else {
+      setForm({
+        name: "",
+        description: "",
+        categoryId: "",
+        subcategoryId: "",
+        price: "",
+        discountPrice: "",
+        stock: "",
+        isFeatured: false,
+        isTrending: false,
+        isNewArrival: false,
+        isActive: true,
+        thumbnail: null,
+      });
       setImagePreview(null);
     }
   }, [product]);
+
+  useEffect(() => {
+    if (!form.categoryId) {
+      setSubCategories([]);
+      return;
+    }
+
+    getSubCategoriesByCategory(form.categoryId)
+      .then((data) => setSubCategories(data || []))
+      .catch(() => setSubCategories([]));
+  }, [form.categoryId]);
 
   // --------------------------------------------------
   // LOAD CATEGORIES
@@ -109,6 +144,7 @@ export default function ProductForm({
     setForm((prev: any) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
+      ...(name === "categoryId" ? { subcategoryId: "" } : {}),
     }));
   };
 
@@ -189,6 +225,11 @@ export default function ProductForm({
       return;
     }
 
+    if (!product && !form.thumbnail) {
+      alert("Please upload a product image.");
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -198,6 +239,7 @@ export default function ProductForm({
       data.append("name", form.name);
       data.append("description", form.description);
       data.append("categoryId", String(form.categoryId));
+      data.append("subcategoryId", String(form.subcategoryId || ""));
       data.append("price", String(form.price));
       data.append(
         "discountPrice",
@@ -379,25 +421,28 @@ export default function ProductForm({
               </select>
             </div>
 
-            {/* SUBCATEGORY PLACEHOLDER */}
-
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
                 Subcategory
               </label>
 
               <select
-                disabled
-                className="w-full cursor-not-allowed rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-400"
+                name="subcategoryId"
+                value={form.subcategoryId}
+                onChange={handleChange}
+                disabled={!form.categoryId}
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-[#C67C2E] focus:ring-2 focus:ring-[#C67C2E]/10 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400"
               >
-                <option>
-                  Subcategories coming next
-                </option>
+                <option value="">No subcategory</option>
+                {subCategories.map((subcategory) => (
+                  <option key={subcategory.id} value={subcategory.id}>
+                    {subcategory.name}
+                  </option>
+                ))}
               </select>
 
               <p className="mt-1 text-xs text-gray-400">
-                Subcategory module will be connected after the backend
-                subcategory API is added.
+                Select a category first to see its available subcategories.
               </p>
             </div>
           </div>

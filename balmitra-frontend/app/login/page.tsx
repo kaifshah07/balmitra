@@ -15,6 +15,7 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement>
@@ -34,10 +35,9 @@ export default function LoginPage() {
     try {
 
       setLoading(true);
+      setError("");
 
       const result = await loginCustomer(form);
-
-      console.log("Login response:", result);
 
       if (!result.success) {
         throw new Error(
@@ -73,12 +73,7 @@ export default function LoginPage() {
 
     } catch (error: any) {
 
-      console.error(
-        "Login Error:",
-        error
-      );
-
-      alert(
+      setError(
         error?.response?.data?.message ||
         error?.message ||
         "Login failed"
@@ -103,6 +98,12 @@ export default function LoginPage() {
         <p className="mt-2 text-gray-500">
           Login to continue shopping.
         </p>
+
+        {error && (
+          <div className="mt-5 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+            {error}
+          </div>
+        )}
 
         <form
           onSubmit={handleSubmit}

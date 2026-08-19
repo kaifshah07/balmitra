@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/lib/api";
 
 type Product = {
 id: number;
@@ -55,7 +56,7 @@ setError("");
   }
 
   const response = await fetch(
-    "${process.env.NEXT_PUBLIC_API_URL}/orders/my-orders",
+    `${API_URL}/orders/my-orders`,
     {
       method: "GET",
       headers: {

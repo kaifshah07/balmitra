@@ -1,16 +1,23 @@
 import axios from "axios";
+import { API_URL } from "@/lib/api";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: API_URL,
   timeout: 10000,
 });
 
 // Attach JWT Token automatically
 api.interceptors.request.use(
   (config) => {
+    const isFormData =
+      typeof FormData !== "undefined" && config.data instanceof FormData;
+
+    if (isFormData) {
+      delete config.headers["Content-Type"];
+    } else {
+      config.headers["Content-Type"] = "application/json";
+    }
+
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("adminToken");
 

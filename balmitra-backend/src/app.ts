@@ -7,20 +7,33 @@ import cookieParser from "cookie-parser";
 
 import routes from "./routes";
 import path from "path";
+import { env } from "./config/env";
 
 const app = express();
 
 // Security
 app.use(helmet());
 
+const allowedOrigins = new Set([
+  "http://localhost:3000",
+  "https://balmitra.vercel.app",
+  ...env.CORS_ORIGINS,
+]);
+
 // CORS
-app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://balmitra.vercel.app/"
-  ],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.has(origin) || /^https:\/\/[^/]+\.vercel\.app$/.test(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error(`Origin not allowed by CORS: ${origin}`));
+    },
+    credentials: true,
+  })
+);
 
 // Body Parser
 app.use(express.json());

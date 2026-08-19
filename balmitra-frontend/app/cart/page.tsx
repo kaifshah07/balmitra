@@ -353,6 +353,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Minus, Plus, Trash2, ArrowLeft } from "lucide-react";
+import { productImageUrl } from "@/lib/api";
 
 type CartItem = {
   productId: number;
@@ -502,9 +503,7 @@ export default function CartPage() {
 
               {cart.map((item) => {
 
-                const imageUrl = item.thumbnail
-                  ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${item.thumbnail}`
-                  : "/images/placeholder.png";
+                const imageUrl = productImageUrl(item.thumbnail);
 
                 return (
 

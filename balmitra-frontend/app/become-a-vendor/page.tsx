@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
+import { API_URL } from "@/lib/api";
 
 export default function BecomeAVendorPage() {
   const [loading, setLoading] = useState(false);
@@ -36,7 +37,7 @@ export default function BecomeAVendorPage() {
     setLoading(true);
 
     const response = await axios.post(
-      "${process.env.NEXT_PUBLIC_API_URL}/vendor-enquiries",
+      `${API_URL}/vendor-enquiries`,
       form
     );
 

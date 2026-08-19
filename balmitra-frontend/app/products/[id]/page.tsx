@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ArrowLeft, ShoppingCart, Minus, Plus } from "lucide-react";
+import { API_URL, productImageUrl } from "@/lib/api";
 
 type Product = {
   id: number;
@@ -42,7 +43,7 @@ export default function ProductDetailsPage({
       const { id } = await params;
 
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_URL}/products/${id}"
+        `${API_URL}/products/${id}`
       );
 
       const result = await response.json();
@@ -152,9 +153,7 @@ alert("Product added to cart");
     );
   }
 
-  const imageUrl = product.thumbnail
-    ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${product.thumbnail}`
-    : "/images/placeholder.png";
+  const imageUrl = productImageUrl(product.thumbnail);
 
   const originalPrice = Number(product.price);
 

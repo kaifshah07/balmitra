@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { API_URL, productImageUrl } from "@/lib/api";
 
 type Product = {
   id: number;
@@ -30,7 +31,7 @@ export default function CustomerProductDetailsPage() {
         setError("");
 
         const response = await fetch(
-          "${process.env.NEXT_PUBLIC_API_URL}/products${params.id}"
+          `${API_URL}/products/${params.id}`
         );
 
         if (!response.ok) {
@@ -102,7 +103,7 @@ export default function CustomerProductDetailsPage() {
           <div className="flex min-h-[400px] items-center justify-center rounded-2xl bg-[#F7F5F1] p-8">
             {product.thumbnail ? (
               <Image
-                src={product.thumbnail}
+                src={productImageUrl(product.thumbnail)}
                 alt={product.name}
                 width={500}
                 height={500}

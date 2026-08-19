@@ -36,8 +36,9 @@ export default function RegisterPage() {
     setError("");
 
     if (form.password !== form.confirmPassword) {
-  throw new Error("Passwords do not match");
-}
+      setError("Passwords do not match");
+      return;
+    }
 
 const result = await registerCustomer({
   name: form.name,
@@ -45,8 +46,6 @@ const result = await registerCustomer({
   phone: form.phone,
   password: form.password,
 });
-
-    console.log("Registration response:", result);
 
     if (!result.success) {
       throw new Error(

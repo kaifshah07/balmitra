@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import ProductForm from "./ProductForm";
+import { productImageUrl } from "@/lib/api";
 
 import {
   getProducts,
@@ -140,17 +141,7 @@ export default function ProductsPage() {
     });
   }, [products, search, categoryFilter]);
 
-  const getImageUrl = (thumbnail?: string | null) => {
-    if (!thumbnail) {
-      return "/images/placeholder.png";
-    }
-
-    if (thumbnail.startsWith("http")) {
-      return thumbnail;
-    }
-
-    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${thumbnail}`;
-  };
+  const getImageUrl = productImageUrl;
 
   return (
     <div className="min-h-screen bg-[#F7F7F5] p-6 lg:p-8">
@@ -312,8 +303,6 @@ export default function ProductsPage() {
             <thead className="border-b border-gray-100 bg-gray-50">
 
               <tr>
-                <th className="p-4 text-left">Image</th>
-
                 <th className="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                   Product
                 </th>
@@ -415,16 +404,18 @@ export default function ProductsPage() {
 
                         <div className="flex items-center gap-4">
 
-                          <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-[#F7F5F1]">
-
-                            <img
-                              src={getImageUrl(
-                                product.thumbnail
-                              )}
-                              alt={product.name}
-                              className="h-full w-full object-contain p-1"
-                            />
-
+                          <div className="relative flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-100 bg-[#F7F5F1]">
+                            {product.thumbnail ? (
+                              <img
+                                src={getImageUrl(product.thumbnail)}
+                                alt={product.name}
+                                className="h-full w-full object-contain p-1"
+                              />
+                            ) : (
+                              <span className="px-1 text-center text-[10px] font-medium text-gray-400">
+                                No image
+                              </span>
+                            )}
                           </div>
 
                           <div className="min-w-0">

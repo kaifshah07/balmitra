@@ -48,11 +48,11 @@ export default function HeroSlider() {
     <section className="relative w-full overflow-hidden bg-white">
       
       {/* Slider viewport */}
-      <div className="relative w-full overflow-hidden">
+      <div className="relative aspect-[5/1] min-h-[160px] w-full overflow-hidden sm:min-h-[220px]">
 
         {/* Horizontal slides */}
         <div
-          className="flex transition-transform duration-700 ease-in-out"
+          className="flex h-full transition-transform duration-700 ease-in-out"
           style={{
             transform: `translateX(-${current * 100}%)`,
           }}
@@ -60,16 +60,16 @@ export default function HeroSlider() {
           {banners.map((banner) => (
             <div
               key={banner.id}
-              className="relative min-w-full flex-shrink-0"
+              className="relative h-full min-w-full flex-shrink-0"
             >
-              <div className="relative w-full">
+              <div className="relative h-full w-full">
                 <Image
                   src={banner.image}
                   alt={`Balmitra Banner ${banner.id}`}
-                  width={1920}
-                  height={650}
+                  fill
+                  sizes="100vw"
                   priority={banner.id === 1}
-                  className="block h-auto w-full"
+                  className="object-cover"
                 />
               </div>
             </div>

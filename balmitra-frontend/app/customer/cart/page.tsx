@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Minus, Plus, Trash2, ArrowLeft } from "lucide-react";
+import { productImageUrl } from "@/lib/api";
 
 type CartItem = {
   productId: number;
@@ -227,7 +228,7 @@ export default function CustomerCartPage() {
 
                     {item.thumbnail ? (
                       <Image
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${item.thumbnail}`}
+                        src={productImageUrl(item.thumbnail)}
                         alt={item.name}
                         width={120}
                         height={120}

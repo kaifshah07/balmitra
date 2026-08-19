@@ -13,11 +13,6 @@ export const registerCustomer = async (customerData) => {
 
     return data;
   } catch (error) {
-    console.error(
-      "Customer Register Error:",
-      error
-    );
-
     throw error;
   }
 };
@@ -42,11 +37,6 @@ export const verifyCustomerOtp = async (
 
     return data;
   } catch (error) {
-    console.error(
-      "Customer OTP Verification Error:",
-      error
-    );
-
     throw error;
   }
 };
@@ -69,11 +59,6 @@ export const resendCustomerOtp = async (
 
     return data;
   } catch (error) {
-    console.error(
-      "Customer Resend OTP Error:",
-      error
-    );
-
     throw error;
   }
 };
@@ -94,11 +79,6 @@ export const loginCustomer = async (
 
     return data;
   } catch (error) {
-    console.error(
-      "Customer Login Error:",
-      error
-    );
-
     throw error;
   }
 };
