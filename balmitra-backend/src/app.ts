@@ -14,22 +14,19 @@ const app = express();
 // Security
 app.use(helmet());
 
-const allowedOrigins = new Set([
+const allowedOrigins = [
   "http://localhost:3000",
   "https://balmitra.vercel.app",
-  ...env.CORS_ORIGINS,
-]);
+];
 
-// CORS
 app.use(
   cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.has(origin) || /^https:\/\/[^/]+\.vercel\.app$/.test(origin)) {
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
-        return;
+      } else {
+        callback(new Error("Not allowed by CORS"));
       }
-
-      callback(new Error(`Origin not allowed by CORS: ${origin}`));
     },
     credentials: true,
   })
