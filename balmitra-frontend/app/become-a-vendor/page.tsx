@@ -36,7 +36,7 @@ export default function BecomeAVendorPage() {
     setLoading(true);
 
     const response = await axios.post(
-      "http://localhost:5000/api/vendor-enquiries",
+      "${process.env.NEXT_PUBLIC_API_URL}/vendor-enquiries",
       form
     );
 

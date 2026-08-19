@@ -503,7 +503,7 @@ export default function CartPage() {
               {cart.map((item) => {
 
                 const imageUrl = item.thumbnail
-                  ? `http://localhost:5000/uploads/products/${item.thumbnail}`
+                  ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${item.thumbnail}`
                   : "/images/placeholder.png";
 
                 return (

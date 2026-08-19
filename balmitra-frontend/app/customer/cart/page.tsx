@@ -227,7 +227,7 @@ export default function CustomerCartPage() {
 
                     {item.thumbnail ? (
                       <Image
-                        src={`http://localhost:5000/uploads/products/${item.thumbnail}`}
+                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${item.thumbnail}`}
                         alt={item.name}
                         width={120}
                         height={120}

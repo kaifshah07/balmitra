@@ -55,7 +55,7 @@ setError("");
   }
 
   const response = await fetch(
-    "http://localhost:5000/api/orders/my-orders",
+    "${process.env.NEXT_PUBLIC_API_URL}/orders/my-orders",
     {
       method: "GET",
       headers: {

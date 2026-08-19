@@ -149,7 +149,7 @@ export default function ProductsPage() {
       return thumbnail;
     }
 
-    return `http://localhost:5000/uploads/products/${thumbnail}`;
+    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${thumbnail}`;
   };
 
   return (

@@ -55,7 +55,7 @@ export default function CheckoutPage() {
  async function loadCustomer(token: string) {
   try {
     const url =
-      "http://localhost:5000/api/auth/customer/me";
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/customer/me`;
 
     console.log("Calling customer API:", url);
 
@@ -173,7 +173,7 @@ setLoading(true);
 
 
 const response = await fetch(
-  "http://localhost:5000/api/orders",
+  "${process.env.NEXT_PUBLIC_API_URL}/orders",
   {
     method: "POST",
     headers: {

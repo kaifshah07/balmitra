@@ -71,7 +71,7 @@ export default function ProductForm({
       // Existing product image
       if (product.thumbnail) {
         setImagePreview(
-          `http://localhost:5000/uploads/products/${product.thumbnail}`
+         `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${product.thumbnail}`
         );
       }
     } else {

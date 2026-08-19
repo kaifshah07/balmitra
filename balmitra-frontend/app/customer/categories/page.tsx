@@ -52,7 +52,7 @@ if (image.startsWith("http")) {
   return image;
 }
 
-return `http://localhost:5000/uploads/categories/${image}`;
+return `https://balmitra.onrender.com/uploads/categories/${image}`;
 
 
 }

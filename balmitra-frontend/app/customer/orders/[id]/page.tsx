@@ -67,7 +67,7 @@ const token = localStorage.getItem("customer_token");
   }
 
   const response = await fetch(
-    `http://localhost:5000/api/orders/my-orders/${orderId}`,
+    "${process.env.NEXT_PUBLIC_API_URL}/orders/my-orders/${orderId}",
     {
       method: "GET",
       headers: {

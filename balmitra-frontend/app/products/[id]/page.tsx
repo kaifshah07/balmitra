@@ -42,7 +42,7 @@ export default function ProductDetailsPage({
       const { id } = await params;
 
       const response = await fetch(
-        `http://localhost:5000/api/products/${id}`
+        "${process.env.NEXT_PUBLIC_API_URL}/products/${id}"
       );
 
       const result = await response.json();
@@ -153,7 +153,7 @@ alert("Product added to cart");
   }
 
   const imageUrl = product.thumbnail
-    ? `http://localhost:5000/uploads/products/${product.thumbnail}`
+    ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${product.thumbnail}`
     : "/images/placeholder.png";
 
   const originalPrice = Number(product.price);

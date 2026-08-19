@@ -209,7 +209,7 @@ export default function CustomerProductsPage() {
                 product.discountPrice !== undefined;
 
               const imageUrl = product.thumbnail
-                ? `http://localhost:5000/uploads/products/${product.thumbnail}`
+                ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/products/${product.thumbnail}`
                 : "/images/placeholder.png";
 
               const isOutOfStock =
