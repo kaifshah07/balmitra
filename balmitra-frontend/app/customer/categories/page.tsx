@@ -53,8 +53,6 @@ if (image.startsWith("http")) {
 }
 
 return `https://balmitra.onrender.com/uploads/categories/${image}`;
-
-
 }
 
 if (loading) {
