@@ -25,13 +25,17 @@ static async create(req: Request, res: Response) {
       data: product,
     });
   } catch (error: any) {
-    console.error("Create Product Error:", error);
+  console.error("========== PRODUCT ERROR ==========");
+  console.error(error);
+  console.error("MESSAGE:", error?.message);
+  console.error("FULL RESPONSE:", error?.response);
+  console.error("===================================");
 
-    return res.status(400).json({
-      success: false,
-      message: error.message,
-    });
-  }
+  return res.status(400).json({
+    success: false,
+    message: error?.message || "Unknown error",
+  });
+}
 }
 
   // =========================

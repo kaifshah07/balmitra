@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { BannerService } from "./banner.service";
-import { uploadToCloudinary } from "../../utils/cloudinaryUpload";
+import { uploadToCloudinary } from "../../utils/cloudinaryUploads";
 
 export class BannerController {
 

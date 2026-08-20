@@ -1,55 +1,47 @@
 import { prisma } from "../../config/database";
 import cloudinary from "../../config/cloudinary";
-
-const uploadToCloudinary = (
-  buffer: Buffer
-): Promise<{ url: string; publicId: string }> => {
-  return new Promise((resolve, reject) => {
-    const uploadStream = cloudinary.uploader.upload_stream(
-      {
-        folder: "balmitra/products",
-        resource_type: "image",
-      },
-      (error, result) => {
-        if (error) {
-          reject(error);
-          return;
-        }
-
-        if (!result) {
-          reject(new Error("Upload failed"));
-          return;
-        }
-
-        resolve({
-          url: result.secure_url,
-          publicId: result.public_id,
-        });
-      }
-    );
-
-    uploadStream.end(buffer);
-  });
-};
+import { uploadToCloudinary } from "../../utils/cloudinaryUploads";
 
 export class ProductService {
   // =========================================================
   // CREATE PRODUCT
   // =========================================================
 
-  static async create(data: any) {
+static async create(data: any) {
+  
+console.log("=== PRODUCT CREATE STARTED ===");
 let thumbnailUrl: string | null = null;
 let thumbnailPublicId: string | null = null;
 
 if (data.file) {
-  const uploaded = await uploadToCloudinary(
-    data.file.buffer
+
+  console.log(
+    "FILE RECEIVED:",
+    !!data.file
   );
 
-  thumbnailUrl = uploaded.url;
-  thumbnailPublicId = uploaded.publicId;
-}
+  console.log(
+    "FILE SIZE:",
+    data.file?.buffer?.length
+  );
 
+  const uploaded =
+    await uploadToCloudinary(
+      data.file.buffer,
+      "balmitra/products"
+    );
+
+  console.log(
+    "CLOUDINARY RESPONSE:",
+    uploaded
+  );
+
+  thumbnailUrl =
+    uploaded.secure_url;
+
+  thumbnailPublicId =
+    uploaded.public_id;
+}
     const slug = data.name
       .toLowerCase()
       .trim()
@@ -129,7 +121,7 @@ if (data.file) {
         stock: Number(data.stock),
 
         thumbnail: thumbnailUrl,
-                  thumbnailPublicId,
+        thumbnailPublicId: thumbnailPublicId,
 
         isFeatured:
           data.isFeatured === true ||
@@ -406,14 +398,22 @@ if (data.file) {
         .trim()
         .replace(/\s+/g, "-");
     }
-    if (data.imageFile) {
+    // -------------------------------------------------------
+// Upload new image
+// -------------------------------------------------------
+
+if (data.imageFile) {
+  console.log("===== PRODUCT UPLOAD START =====");
+console.log("File Name:", data.file?.originalname);
+console.log("File Size:", data.file?.size);
+console.log("Mime Type:", data.file?.mimetype);
   const uploaded = await uploadToCloudinary(
-    data.imageFile.buffer
+    data.imageFile.buffer,
+    "balmitra/products"
   );
 
-  updateData.thumbnail = uploaded.url;
-  updateData.thumbnailPublicId =
-    uploaded.publicId;
+  updateData.thumbnail = uploaded.secure_url;
+  updateData.thumbnailPublicId = uploaded.public_id;
 }
 
     // -------------------------------------------------------

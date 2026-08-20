@@ -4,7 +4,7 @@ import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
-
+// import testCloudinaryRoute from "/cloudinary-test"
 import routes from "./routes";
 import path from "path";
 import { env } from "./config/env";
@@ -52,6 +52,8 @@ app.get("/", (req, res) => {
     message: "Balmitra Backend API is Running 🚀",
   });
 });
+
+// app.use("/test-cloudinary", testCloudinaryRoute);
 
 // API Routes
 app.use("/api", routes);
