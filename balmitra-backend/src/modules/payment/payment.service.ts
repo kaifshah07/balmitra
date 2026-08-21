@@ -14,6 +14,14 @@ export class PaymentService {
   // =====================================================
 
   static async createPayment(orderId: number, customerId: number) {
+
+    console.log("RAZORPAY KEY:", env.RAZORPAY_KEY_ID);
+  console.log(
+    "RAZORPAY SECRET:",
+    env.RAZORPAY_KEY_SECRET
+      ? "FOUND"
+      : "MISSING"
+);
     const order = await prisma.order.findFirst({
       where: {
         id: orderId,

@@ -1,9 +1,9 @@
 import { Router } from "express";
-
 import { ProductController } from "./product.controller";
-
-import { authenticateAdmin } from "../../middleware/auth.middleware";
-
+import {
+  authenticateAdmin,
+  requireAdmin,
+} from "../../middleware/auth.middleware";
 import { upload } from "../../middleware/upload.middleware";
 
 const router = Router();
@@ -12,6 +12,7 @@ const router = Router();
 router.post(
   "/",
   authenticateAdmin,
+  requireAdmin,
   upload.single("thumbnail"),
   ProductController.create
 );
@@ -20,6 +21,7 @@ router.post(
 router.get(
   "/",
   authenticateAdmin,
+  requireAdmin,
   ProductController.getAll
 );
 
@@ -27,6 +29,7 @@ router.get(
 router.get(
   "/:id",
   authenticateAdmin,
+  requireAdmin,
   ProductController.getById
 );
 
@@ -34,6 +37,7 @@ router.get(
 router.put(
   "/:id",
   authenticateAdmin,
+  requireAdmin,
   upload.single("thumbnail"),
   ProductController.update
 );
@@ -42,6 +46,7 @@ router.put(
 router.delete(
   "/:id",
   authenticateAdmin,
+  requireAdmin,
   ProductController.delete
 );
 

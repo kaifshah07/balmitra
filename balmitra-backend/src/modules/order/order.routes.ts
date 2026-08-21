@@ -1,11 +1,16 @@
 import { Router } from "express";
-
 import { OrderController } from "./order.controller";
-
-import { authenticateAdmin } from "../../middleware/auth.middleware";
+import {
+  authenticateAdmin,
+  requireAdmin,
+} from "../../middleware/auth.middleware";
 import { authenticateCustomer } from "../customer-auth/customer-auth.middleware";
 
 const router = Router();
+
+// =========================
+// CUSTOMER ROUTES
+// =========================
 
 // Customer places order
 router.post(
@@ -28,40 +33,49 @@ router.get(
   OrderController.getMyOrderById
 );
 
-// Admin APIs
+// =========================
+// ADMIN ROUTES
+// =========================
+
 router.get(
   "/",
   authenticateAdmin,
+  requireAdmin,
   OrderController.getAll
 );
 
 router.get(
   "/:id",
   authenticateAdmin,
+  requireAdmin,
   OrderController.getById
 );
 
 router.patch(
   "/:id/status",
   authenticateAdmin,
+  requireAdmin,
   OrderController.updateStatus
 );
 
 router.delete(
   "/:id",
   authenticateAdmin,
+  requireAdmin,
   OrderController.delete
 );
 
 router.patch(
   "/:id/payment",
   authenticateAdmin,
+  requireAdmin,
   OrderController.updatePaymentStatus
 );
 
 router.patch(
   "/:id/cancel",
   authenticateAdmin,
+  requireAdmin,
   OrderController.cancelOrder
 );
 

@@ -34,7 +34,6 @@ export const authenticateAdmin = (
     ) as JwtPayload;
 
     req.admin = decoded;
-
     next();
   } catch (error) {
     return res.status(401).json({
@@ -42,4 +41,37 @@ export const authenticateAdmin = (
       message: "Invalid or expired token",
     });
   }
+};
+
+export const requireAdmin = (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (
+    req.admin?.role !== "ADMIN" &&
+    req.admin?.role !== "SUPER_ADMIN"
+  ) {
+    return res.status(403).json({
+      success: false,
+      message: "Admin access required",
+    });
+  }
+
+  next();
+};
+
+export const requireSuperAdmin = (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.admin?.role !== "SUPER_ADMIN") {
+    return res.status(403).json({
+      success: false,
+      message: "Super Admin access required",
+    });
+  }
+
+  next();
 };
